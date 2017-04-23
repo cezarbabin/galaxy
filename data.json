@@ -1,0 +1,11 @@
+{
+	"config":"square",
+	"11":{
+		"type":"image",
+		"name":"mini.jpg"
+	},
+	"12":{
+		"type":"video",
+		"name":"testVideo.mp4"
+	}
+}

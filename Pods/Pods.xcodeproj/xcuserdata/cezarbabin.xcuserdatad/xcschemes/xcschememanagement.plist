@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Pods-Galaxy.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-GalaxyTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-GalaxyUITests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Starscream.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Swifter.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>109678FD4B7FF4DBE5E78BAEF11DD95D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B43678ED82C00F227E250FEC055FC210</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B888A94519D7595557B24598EA20D985</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C8FC29564ED4BC50057F301D0B7A604C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DD042A1FEFAC04DCBBF03A7AC7E14D02</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

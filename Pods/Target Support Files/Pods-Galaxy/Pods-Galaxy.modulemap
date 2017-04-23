@@ -1,0 +1,6 @@
+framework module Pods_Galaxy {
+  umbrella header "Pods-Galaxy-umbrella.h"
+
+  export *
+  module * { export * }
+}

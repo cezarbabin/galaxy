@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2921D41636744FBCCC1D2949 /* Pods_GalaxyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B54E5784D2904E84D8EBD9 /* Pods_GalaxyUITests.framework */; };
 		545F36D51EABE1C4000811E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36D41EABE1C4000811E3 /* AppDelegate.swift */; };
 		545F36D71EABE1C4000811E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36D61EABE1C4000811E3 /* ViewController.swift */; };
 		545F36DA1EABE1C5000811E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 545F36D81EABE1C5000811E3 /* Main.storyboard */; };
@@ -14,6 +15,14 @@
 		545F36DF1EABE1C5000811E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 545F36DD1EABE1C5000811E3 /* LaunchScreen.storyboard */; };
 		545F36EA1EABE1C5000811E3 /* GalaxyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36E91EABE1C5000811E3 /* GalaxyTests.swift */; };
 		545F36F51EABE1C5000811E3 /* GalaxyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36F41EABE1C5000811E3 /* GalaxyUITests.swift */; };
+		545F37091EABE2B7000811E3 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 545F37031EABE2B7000811E3 /* index.html */; };
+		545F370A1EABE2B7000811E3 /* mini.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 545F37041EABE2B7000811E3 /* mini.jpg */; };
+		545F370B1EABE2B7000811E3 /* pixi.js in Resources */ = {isa = PBXBuildFile; fileRef = 545F37051EABE2B7000811E3 /* pixi.js */; };
+		545F370C1EABE2B7000811E3 /* square_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 545F37061EABE2B7000811E3 /* square_green.png */; };
+		545F370D1EABE2B7000811E3 /* square_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 545F37071EABE2B7000811E3 /* square_red.png */; };
+		545F370E1EABE2B7000811E3 /* testVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 545F37081EABE2B7000811E3 /* testVideo.mp4 */; };
+		A541D2CA373DFFFC5E51BA44 /* Pods_Galaxy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BA88A2F87DDE2EABF7A86D /* Pods_Galaxy.framework */; };
+		E9EC66C666ABA9B408F5C87E /* Pods_GalaxyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F589318746243D61E108968 /* Pods_GalaxyTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +43,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D2EFB8E6970FEECD22C1DF8 /* Pods-GalaxyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GalaxyUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GalaxyUITests/Pods-GalaxyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		16BA88A2F87DDE2EABF7A86D /* Pods_Galaxy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Galaxy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		24C6820BA270109443D1BF82 /* Pods-GalaxyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GalaxyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GalaxyUITests/Pods-GalaxyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		32E0F284C80EC8E7FDC9E47D /* Pods-Galaxy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Galaxy/Pods-Galaxy.release.xcconfig"; sourceTree = "<group>"; };
+		34DD762067286374B44C853B /* Pods-Galaxy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Galaxy/Pods-Galaxy.debug.xcconfig"; sourceTree = "<group>"; };
 		545F36D11EABE1C4000811E3 /* Galaxy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Galaxy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		545F36D41EABE1C4000811E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		545F36D61EABE1C4000811E3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +61,16 @@
 		545F36F01EABE1C5000811E3 /* GalaxyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GalaxyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		545F36F41EABE1C5000811E3 /* GalaxyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyUITests.swift; sourceTree = "<group>"; };
 		545F36F61EABE1C5000811E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		545F37031EABE2B7000811E3 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		545F37041EABE2B7000811E3 /* mini.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mini.jpg; sourceTree = "<group>"; };
+		545F37051EABE2B7000811E3 /* pixi.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = pixi.js; sourceTree = "<group>"; };
+		545F37061EABE2B7000811E3 /* square_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = square_green.png; sourceTree = "<group>"; };
+		545F37071EABE2B7000811E3 /* square_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = square_red.png; sourceTree = "<group>"; };
+		545F37081EABE2B7000811E3 /* testVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = testVideo.mp4; sourceTree = "<group>"; };
+		65B54E5784D2904E84D8EBD9 /* Pods_GalaxyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GalaxyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F589318746243D61E108968 /* Pods_GalaxyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GalaxyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A62EF89F7C8896ECE748989A /* Pods-GalaxyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GalaxyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GalaxyTests/Pods-GalaxyTests.release.xcconfig"; sourceTree = "<group>"; };
+		F755CC44094285752AAFF3FA /* Pods-GalaxyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GalaxyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GalaxyTests/Pods-GalaxyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A541D2CA373DFFFC5E51BA44 /* Pods_Galaxy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9EC66C666ABA9B408F5C87E /* Pods_GalaxyTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2921D41636744FBCCC1D2949 /* Pods_GalaxyUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,10 +104,13 @@
 		545F36C81EABE1C4000811E3 = {
 			isa = PBXGroup;
 			children = (
+				545F370F1EABEC73000811E3 /* Resources */,
 				545F36D31EABE1C4000811E3 /* Galaxy */,
 				545F36E81EABE1C5000811E3 /* GalaxyTests */,
 				545F36F31EABE1C5000811E3 /* GalaxyUITests */,
 				545F36D21EABE1C4000811E3 /* Products */,
+				58934726C9B31C498F4C5ED0 /* Pods */,
+				61DF9D9FF89B9043DCDE23C3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +155,50 @@
 			path = GalaxyUITests;
 			sourceTree = "<group>";
 		};
+		545F37021EABE285000811E3 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				545F37031EABE2B7000811E3 /* index.html */,
+				545F37041EABE2B7000811E3 /* mini.jpg */,
+				545F37051EABE2B7000811E3 /* pixi.js */,
+				545F37061EABE2B7000811E3 /* square_green.png */,
+				545F37071EABE2B7000811E3 /* square_red.png */,
+				545F37081EABE2B7000811E3 /* testVideo.mp4 */,
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
+		545F370F1EABEC73000811E3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				545F37021EABE285000811E3 /* Editor */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		58934726C9B31C498F4C5ED0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				34DD762067286374B44C853B /* Pods-Galaxy.debug.xcconfig */,
+				32E0F284C80EC8E7FDC9E47D /* Pods-Galaxy.release.xcconfig */,
+				F755CC44094285752AAFF3FA /* Pods-GalaxyTests.debug.xcconfig */,
+				A62EF89F7C8896ECE748989A /* Pods-GalaxyTests.release.xcconfig */,
+				24C6820BA270109443D1BF82 /* Pods-GalaxyUITests.debug.xcconfig */,
+				0D2EFB8E6970FEECD22C1DF8 /* Pods-GalaxyUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		61DF9D9FF89B9043DCDE23C3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				16BA88A2F87DDE2EABF7A86D /* Pods_Galaxy.framework */,
+				6F589318746243D61E108968 /* Pods_GalaxyTests.framework */,
+				65B54E5784D2904E84D8EBD9 /* Pods_GalaxyUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +206,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 545F36F91EABE1C5000811E3 /* Build configuration list for PBXNativeTarget "Galaxy" */;
 			buildPhases = (
+				DFA0830DB720CC069D2C3197 /* [CP] Check Pods Manifest.lock */,
 				545F36CD1EABE1C4000811E3 /* Sources */,
 				545F36CE1EABE1C4000811E3 /* Frameworks */,
 				545F36CF1EABE1C4000811E3 /* Resources */,
+				E2D04C49F7ADFDD09573A0C2 /* [CP] Embed Pods Frameworks */,
+				8034F3B01E9C40CE225198D1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -149,9 +226,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 545F36FC1EABE1C5000811E3 /* Build configuration list for PBXNativeTarget "GalaxyTests" */;
 			buildPhases = (
+				BA6A2530396079A9D5786C03 /* [CP] Check Pods Manifest.lock */,
 				545F36E11EABE1C5000811E3 /* Sources */,
 				545F36E21EABE1C5000811E3 /* Frameworks */,
 				545F36E31EABE1C5000811E3 /* Resources */,
+				D57947D76751524AE45DE4F9 /* [CP] Embed Pods Frameworks */,
+				052DED96BC0F5FB8FFF9F21D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -167,9 +247,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 545F36FF1EABE1C5000811E3 /* Build configuration list for PBXNativeTarget "GalaxyUITests" */;
 			buildPhases = (
+				6F2FEA8FB5100C020D7F70B0 /* [CP] Check Pods Manifest.lock */,
 				545F36EC1EABE1C5000811E3 /* Sources */,
 				545F36ED1EABE1C5000811E3 /* Frameworks */,
 				545F36EE1EABE1C5000811E3 /* Resources */,
+				EA86DCF1F4B81AB014E8ABBE /* [CP] Embed Pods Frameworks */,
+				3541F7A8213CCB6AEFD098A9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -193,6 +276,7 @@
 				TargetAttributes = {
 					545F36D01EABE1C4000811E3 = {
 						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = 7TJ6UVZRLR;
 						ProvisioningStyle = Automatic;
 					};
 					545F36E41EABE1C5000811E3 = {
@@ -232,9 +316,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				545F370B1EABE2B7000811E3 /* pixi.js in Resources */,
 				545F36DF1EABE1C5000811E3 /* LaunchScreen.storyboard in Resources */,
+				545F370A1EABE2B7000811E3 /* mini.jpg in Resources */,
+				545F37091EABE2B7000811E3 /* index.html in Resources */,
+				545F370D1EABE2B7000811E3 /* square_red.png in Resources */,
+				545F370E1EABE2B7000811E3 /* testVideo.mp4 in Resources */,
 				545F36DC1EABE1C5000811E3 /* Assets.xcassets in Resources */,
 				545F36DA1EABE1C5000811E3 /* Main.storyboard in Resources */,
+				545F370C1EABE2B7000811E3 /* square_green.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +343,144 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		052DED96BC0F5FB8FFF9F21D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GalaxyTests/Pods-GalaxyTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3541F7A8213CCB6AEFD098A9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GalaxyUITests/Pods-GalaxyUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6F2FEA8FB5100C020D7F70B0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8034F3B01E9C40CE225198D1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Galaxy/Pods-Galaxy-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BA6A2530396079A9D5786C03 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D57947D76751524AE45DE4F9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GalaxyTests/Pods-GalaxyTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DFA0830DB720CC069D2C3197 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E2D04C49F7ADFDD09573A0C2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Galaxy/Pods-Galaxy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA86DCF1F4B81AB014E8ABBE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GalaxyUITests/Pods-GalaxyUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		545F36CD1EABE1C4000811E3 /* Sources */ = {
@@ -412,8 +640,10 @@
 		};
 		545F36FA1EABE1C5000811E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 34DD762067286374B44C853B /* Pods-Galaxy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7TJ6UVZRLR;
 				INFOPLIST_FILE = Galaxy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cezarbabin.Galaxy;
@@ -424,8 +654,10 @@
 		};
 		545F36FB1EABE1C5000811E3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 32E0F284C80EC8E7FDC9E47D /* Pods-Galaxy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7TJ6UVZRLR;
 				INFOPLIST_FILE = Galaxy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cezarbabin.Galaxy;
@@ -436,6 +668,7 @@
 		};
 		545F36FD1EABE1C5000811E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F755CC44094285752AAFF3FA /* Pods-GalaxyTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -450,6 +683,7 @@
 		};
 		545F36FE1EABE1C5000811E3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A62EF89F7C8896ECE748989A /* Pods-GalaxyTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -464,6 +698,7 @@
 		};
 		545F37001EABE1C5000811E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24C6820BA270109443D1BF82 /* Pods-GalaxyUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = GalaxyUITests/Info.plist;
@@ -477,6 +712,7 @@
 		};
 		545F37011EABE1C5000811E3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0D2EFB8E6970FEECD22C1DF8 /* Pods-GalaxyUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = GalaxyUITests/Info.plist;
@@ -507,6 +743,7 @@
 				545F36FB1EABE1C5000811E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		545F36FC1EABE1C5000811E3 /* Build configuration list for PBXNativeTarget "GalaxyTests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +752,7 @@
 				545F36FE1EABE1C5000811E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		545F36FF1EABE1C5000811E3 /* Build configuration list for PBXNativeTarget "GalaxyUITests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +761,7 @@
 				545F37011EABE1C5000811E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

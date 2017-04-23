@@ -9,17 +9,14 @@
   <script src="pixi.js"></script>
 <body>
   <script>
-
-    
-
     /*
     $.getJSON("data.json", function(j) {
       json = j;
       setupGrid(json);
     });
     */
-      
-   
+
+    
 
     //connection.send('your message');
 
@@ -35,9 +32,8 @@
 
     var app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
     document.body.appendChild(app.view);
-
    
-     // WEBSOCKET
+    // WEBSOCKET
     var connection = new WebSocket('ws://127.0.0.1:8080/websocket-echo', ['chat', 'superchat']);
     
     connection.onopen = function () {
@@ -63,12 +59,33 @@
     texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
      var json ;
+
+     function readTextFile(file, callback) {
+      var rawFile = new XMLHttpRequest();
+      rawFile.overrideMimeType("application/json");
+      rawFile.open("GET", file, true);
+      rawFile.onreadystatechange = function() {
+          if (rawFile.readyState === 4 && rawFile.status == "200") {
+              callback(rawFile.responseText);
+          }
+      }
+      rawFile.send(null);
+    }
+
+    //usage:
+    readTextFile("data.json", function(text){
+      var data = JSON.parse(text);
+      json = data;
+      setupGrid();
+    });
+
+    /*
     $.getJSON("data.json", function(j) {
       json = j;
        setupGrid();
     });
+    */
    
-
 
     function setupGrid() {
       for (var i = 0; i < 9; i++) {
@@ -124,22 +141,21 @@
     }
 
     function onPlayVideo() {
+      // Don't need the button anymore
+      button.destroy();
 
-    // Don't need the button anymore
-    button.destroy();
+      // create a video texture from a path
+      var texture = PIXI.Texture.fromVideo('testVideo.mp4');
 
-    // create a video texture from a path
-    var texture = PIXI.Texture.fromVideo('testVideo.mp4');
+      // create a new Sprite using the video texture (yes it's that easy)
+      var videoSprite = new PIXI.Sprite(texture);
 
-    // create a new Sprite using the video texture (yes it's that easy)
-    var videoSprite = new PIXI.Sprite(texture);
+      // Stetch the fullscreen
+      videoSprite.width = app.renderer.width;
+      videoSprite.height = app.renderer.height;
 
-    // Stetch the fullscreen
-    videoSprite.width = app.renderer.width;
-    videoSprite.height = app.renderer.height;
-
-    app.stage.addChild(videoSprite); 
-}
+      app.stage.addChild(videoSprite); 
+    }
     
     function checkData(index){
       if (json[index] != null){
@@ -152,7 +168,6 @@
         texture = PIXI.Texture.fromImage('square_green.png');
       }
     }
-
 
     function createBunny(x, y, t) {
 
@@ -211,19 +226,17 @@
     }
 
     function onDragStart(event) {
-        // store a reference to the data
-        // the reason for this is because of multitouch
-        // we want to track the movement of this particular touch
-        this.data = event.data;
-        //this.alpha = 0.5;
-        this.dragging = true;
-        
-         //if (person != null){
-            connection.send(this.x + " " + this.y); 
-            //textureWithName(person, this);
-         // }
-
-    //var person = prompt("Please enter your name", "Harry Potter");
+      // store a reference to the data
+      // the reason for this is because of multitouch
+      // we want to track the movement of this particular touch
+      this.data = event.data;
+      //this.alpha = 0.5;
+      this.dragging = true;
+      //if (person != null){
+        connection.send(this.x + " " + this.y); 
+        //textureWithName(person, this);
+      // }
+      //var person = prompt("Please enter your name", "Harry Potter");
     }
 
     function textureWithName(name, obj){
@@ -231,24 +244,24 @@
     }
 
     var button = new PIXI.Graphics()
-    .beginFill(0x0, 0.5)
-    .drawRoundedRect(0, 0, 100, 100, 10)
-    .endFill()
-    .beginFill(0xffffff)
-    .moveTo(36, 30)
-    .lineTo(36, 70)
-    .lineTo(70, 50);
+      .beginFill(0x0, 0.5)
+      .drawRoundedRect(0, 0, 100, 100, 10)
+      .endFill()
+      .beginFill(0xffffff)
+      .moveTo(36, 30)
+      .lineTo(36, 70)
+      .lineTo(70, 50);
 
     // Position the button
-button.x = (app.renderer.width - button.width) / 2;
-button.y = (app.renderer.height - button.height) / 2;
+    button.x = (app.renderer.width - button.width) / 2;
+    button.y = (app.renderer.height - button.height) / 2;
 
-// Enable interactivity on the button
-button.interactive = true;
-button.buttonMode = true;
+    // Enable interactivity on the button
+    button.interactive = true;
+    button.buttonMode = true;
 
-// Add to the stage
-app.stage.addChild(button);
+    // Add to the stage
+    app.stage.addChild(button);
 
     function setVideo(name, obj) {
       //var textureName = name + '.mp4';

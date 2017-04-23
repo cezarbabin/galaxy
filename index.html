@@ -37,42 +37,7 @@
     document.body.appendChild(app.view);
 
    
-     
-    //setupGrid();
-
-    // create a texture from an image path
-    var texture = PIXI.Texture.fromImage('square_green.png');
-    var texture_01 = PIXI.Texture.fromImage('square_red.png');
-
-    // Scale mode for pixelation
-    texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-
-     
-     //setupGrid();
-
-    function readTextFile(file, callback) {
-      var rawFile = new XMLHttpRequest();
-      rawFile.overrideMimeType("application/json");
-      rawFile.open("GET", file, true);
-      rawFile.onreadystatechange = function() {
-          if (rawFile.readyState === 4 && rawFile.status == "200") {
-              callback(rawFile.responseText);
-          }
-      }
-      rawFile.send(null);
-    }
-
-//usage:
-    var json ;
-    readTextFile("data.json", function(text){
-        var data = JSON.parse(text);
-        json = data;
-        setupGrid();
-    });
-
-    
-
-    // WEBSOCKET
+     // WEBSOCKET
     var connection = new WebSocket('ws://127.0.0.1:8080/websocket-echo', ['chat', 'superchat']);
     
     connection.onopen = function () {
@@ -88,6 +53,21 @@
     connection.onmessage = function (e) {
         console.log('Server: ' + e.data);
     };
+    //setupGrid();
+
+    // create a texture from an image path
+    var texture = PIXI.Texture.fromImage('square_green.png');
+    var texture_01 = PIXI.Texture.fromImage('square_red.png');
+
+    // Scale mode for pixelation
+    texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+
+     var json ;
+    $.getJSON("data.json", function(j) {
+      json = j;
+       setupGrid();
+    });
+   
 
 
     function setupGrid() {
@@ -95,7 +75,8 @@
         if (i == 0)
           createBunny(
               Math.floor(app.renderer.width/2), 
-              Math.floor(app.renderer.height/2)
+              Math.floor(app.renderer.height/2),
+              checkData(1)
           );
         if (i == 1)
           createBunny(
@@ -141,6 +122,24 @@
           );
       }
     }
+
+    function onPlayVideo() {
+
+    // Don't need the button anymore
+    button.destroy();
+
+    // create a video texture from a path
+    var texture = PIXI.Texture.fromVideo('testVideo.mp4');
+
+    // create a new Sprite using the video texture (yes it's that easy)
+    var videoSprite = new PIXI.Sprite(texture);
+
+    // Stetch the fullscreen
+    videoSprite.width = app.renderer.width;
+    videoSprite.height = app.renderer.height;
+
+    app.stage.addChild(videoSprite); 
+}
     
     function checkData(index){
       if (json[index] != null){
@@ -180,6 +179,8 @@
 
         // setup events for mouse + touch using
         // the pointer events
+
+        //// BUTTTTON
         bunny
             .on('pointerdown', onDragStart)
             .on('pointerup', onDragEnd)
@@ -206,7 +207,7 @@
         app.stage.addChild(bunny);
 
         // reset texture
-        texture = PIXI.Texture.fromImage('square_green.png');
+        //texture = PIXI.Texture.fromImage('square_green.png');
     }
 
     function onDragStart(event) {
@@ -229,9 +230,37 @@
       setPicture(name, obj);
     }
 
+    var button = new PIXI.Graphics()
+    .beginFill(0x0, 0.5)
+    .drawRoundedRect(0, 0, 100, 100, 10)
+    .endFill()
+    .beginFill(0xffffff)
+    .moveTo(36, 30)
+    .lineTo(36, 70)
+    .lineTo(70, 50);
+
+    // Position the button
+button.x = (app.renderer.width - button.width) / 2;
+button.y = (app.renderer.height - button.height) / 2;
+
+// Enable interactivity on the button
+button.interactive = true;
+button.buttonMode = true;
+
+// Add to the stage
+app.stage.addChild(button);
+
     function setVideo(name, obj) {
       //var textureName = name + '.mp4';
       var textureTemp = PIXI.Texture.fromVideoUrl(name);
+      /*
+      textureTemp.baseTexture.source.setAttribute('webkit-playsinline', '');
+      textureTemp.baseTexture.source.setAttribute('playsinline', '');
+      textureTemp.baseTexture.source.setAttribute('autoplay', '');
+      textureTemp.baseTexture.source.setAttribute('loop', '');
+      textureTemp.baseTexture.source.setAttribute('muted', 'muted');
+      textureTemp.baseTexture.source.pause();
+      */
       obj.texture = textureTemp;
     }
 

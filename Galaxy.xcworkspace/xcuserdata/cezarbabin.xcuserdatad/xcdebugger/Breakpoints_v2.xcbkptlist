@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Galaxy/ViewController.swift"
-            timestampString = "514704098.657516"
+            timestampString = "514710304.237632"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
             landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Galaxy/ViewController.swift"
-            timestampString = "514708753.798945"
+            timestampString = "514711073.824658"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
             landmarkName = "copyBundleToDocs(name:ext:)"
             landmarkType = "7">
          </BreakpointContent>

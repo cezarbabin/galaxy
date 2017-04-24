@@ -47,6 +47,8 @@ class ViewController: UIViewController {
         
         moveFilesToDocs()
         
+        saveJsonData()
+        
         let server = HttpServer()
         server["/websocket-echo"] = websocket({ (session, text) in
             //session.writeText(text)
@@ -85,6 +87,7 @@ class ViewController: UIViewController {
         copyBundleToDocs(name:"mini", ext:".jpg")
         copyBundleToDocs(name:"index", ext:".html")
         copyBundleToDocs(name:"data", ext:".json")
+        copyBundleToDocs(name:"square_green", ext:".png")
     }
     
     func startWebSocket () {
@@ -231,6 +234,48 @@ extension ViewController : UIImagePickerControllerDelegate {
         self.dismiss(animated: true, completion: { () -> Void in })
     }
     
+    func saveJsonData(){
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory,
+            .userDomainMask,
+            true)[0] + "/data.json"
+        
+        var validDictionary : [String : [String : Any]]
+        var jsonData = NSData(contentsOfFile: path)
+        do{
+            validDictionary = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers) as![String : [String : Any]]
+            print(validDictionary)
+            validDictionary["5"] = ["img" : "blea", "imgt" : "OIOIOI"]
+            print(validDictionary)
+            
+            let rawData: NSData!
+            
+            
+            if JSONSerialization.isValidJSONObject(validDictionary) { // True
+                do {
+                    rawData = try JSONSerialization.data(withJSONObject: validDictionary, options: .prettyPrinted) as NSData
+                    let success = try rawData.write(toFile: path , options: .atomic)
+                    print ("JSON WRITE SUCCEEDDE \(success)")
+                    
+                    
+                    //var jsonData = NSData(contentsOfFile: "newdata.json")
+                    //var jsonDict = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers)
+                    // -> ["stringValue": "JSON", "arrayValue": [0, 1, 2, 3, 4, 5], "numericalValue": 1]
+                    
+                } catch {
+                    print(error)
+                    // Handle Error
+                }
+            }
+            
+        } catch {
+            print("Didnt open")
+            print(error)
+        }
+        
+        
+    }
+    
     func copyBundleToDocs(name:String, ext:String) {
         let bundlePath = Bundle.main.path(forResource: name, ofType: ext)
         //print(bundlePath, "\n") //prints the correct path
@@ -249,10 +294,12 @@ extension ViewController : UIImagePickerControllerDelegate {
             if ext == ".json" {
                 print ("YES JSON")
 
-                try fileManager.removeItem(at: fullDestPath!)
+                //try fileManager.removeItem(at: fullDestPath!)
+            } else {
+                try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             }
             
-            try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
+            
             
         }catch{
             print("\n ////?ERRROR")

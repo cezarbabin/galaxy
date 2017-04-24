@@ -16,7 +16,7 @@
     });
     */
 
-    
+    var editMode = false;
 
     //connection.send('your message');
 
@@ -57,12 +57,17 @@
         //console.log('Server: ' + e.data);
         //prompt("You just selected an image", e.data);
 
-        if (currentSelection != null){
+        if (currentSelection != null && e.data != "switch"){
           connection.send("Ping"); 
           setPicture("../" + e.data, currentSelection)
-        } else {
+        } else if (e.data == "switch") {
+          if (editMode == true)
+            editMode = false
+          else if (editMode == false)
+            editMode = true
           //connection.send("clicked me but session is nil"); 
         }
+
     };
     //setupGrid();
 
@@ -149,22 +154,6 @@
       }
     }
 
-    function onPlayVideo() {
-      // Don't need the button anymore
-      button.destroy();
-
-      // create a video texture from a path
-      var texture = PIXI.Texture.fromVideo('testVideo.mp4');
-
-      // create a new Sprite using the video texture (yes it's that easy)
-      var videoSprite = new PIXI.Sprite(texture);
-
-      // Stetch the fullscreen
-      videoSprite.width = app.renderer.width;
-      videoSprite.height = app.renderer.height;
-
-      app.stage.addChild(videoSprite); 
-    }
     
     function checkData(index){
       if (json[index] != null){
@@ -234,19 +223,28 @@
         //texture = PIXI.Texture.fromImage('square_green.png');
     }
 
+    
+
     var currentSelection;
 
     function onDragStart(event) {
       // store a reference to the data
       // the reason for this is because of multitouch
       // we want to track the movement of this particular touch
-      this.data = event.data;
-      //this.alpha = 0.5;
-      this.dragging = true;
+      
       //if (person != null){
+      
+      if (editMode == false){
         connection.send(locationDict[String([this.x, this.y])]); 
         currentSelection = this
-        //textureWithName(person, this);
+      } else {
+        this.data = event.data;
+        //this.alpha = 0.5;
+        this.dragging = true;
+      }
+   
+      
+      //textureWithName(person, this);
       // }
       //var person = prompt("Please enter your name", "Harry Potter");
     }
@@ -255,25 +253,8 @@
       setPicture(name, obj);
     }
 
-    var button = new PIXI.Graphics()
-      .beginFill(0x0, 0.5)
-      .drawRoundedRect(0, 0, 100, 100, 10)
-      .endFill()
-      .beginFill(0xffffff)
-      .moveTo(36, 30)
-      .lineTo(36, 70)
-      .lineTo(70, 50);
-
-    // Position the button
-    button.x = (app.renderer.width - button.width) / 2;
-    button.y = (app.renderer.height - button.height) / 2;
-
-    // Enable interactivity on the button
-    button.interactive = true;
-    button.buttonMode = true;
-
+    
     // Add to the stage
-    app.stage.addChild(button);
 
     function setVideo(name, obj) {
       //var textureName = name + '.mp4';

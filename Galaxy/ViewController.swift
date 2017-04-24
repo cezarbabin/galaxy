@@ -21,6 +21,12 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var btn: UIButton!
     
+    @IBOutlet weak var editModeSwitchView: UISwitch!
+    @IBAction func editModeSwitch(_ sender: Any) {
+        if self.session != nil {
+            session?.writeText("switch")
+        }
+    }
     
     @IBAction func imagePickerPressed(sender: UIButton) {
         self.present(self.imagePicker, animated: true, completion: nil)
@@ -41,6 +47,7 @@ class ViewController: UIViewController {
         view = webView
         //view.bringSubview(toFront: webView)
         view.addSubview(btn)
+        view.addSubview(editModeSwitchView)
         
         self.imagePicker.delegate = self
         self.imagePicker.sourceType = .savedPhotosAlbum;
@@ -297,7 +304,7 @@ extension ViewController : UIImagePickerControllerDelegate {
         print(fileManager.fileExists(atPath: bundlePath!)) // prints true
         
         do{
-            if ext == ".html" {
+            if ext == ".json" {
                 print ("YES JSON")
 
                 //try fileManager.removeItem(at: fullDestPath!)

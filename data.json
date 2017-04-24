@@ -7,5 +7,37 @@
 	"2":{
 		"type":"image",
 		"name":"mini.jpg"
+	},
+	"3":{
+		"type":"image",
+		"name":"mini.jpg"
+	},
+	"4":{
+		"type":"image",
+		"name":"mini.jpg"
+	},
+	"5":{
+		"type":"image",
+		"name":"mini.jpg"
+	},
+	"6":{
+		"type":"image",
+		"name":"mini.jpg"
+	},
+	"7":{
+		"type":"image",
+		"name":"mini.jpg"
+	},
+	"8":{
+		"type":"image",
+		"name":"mini.jpg"
+	},
+	"9":{
+		"type":"image",
+		"name":"mini.jpg"
+	},
+	"0":{
+		"type":"image",
+		"name":"mini.jpg"
 	}
 }

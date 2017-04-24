@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,15 +18,11 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lOs-3w-U1A">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </webView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FVZ-TV-b7w">
-                                <rect key="frame" x="107" y="565" width="160" height="60"/>
+                                <rect key="frame" x="127" y="623" width="160" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" title="PICTURE"/>
@@ -36,20 +32,14 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="lOs-3w-U1A" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Xrf-ui-tFM"/>
-                            <constraint firstItem="lOs-3w-U1A" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="erX-sh-bBX"/>
-                            <constraint firstItem="lOs-3w-U1A" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="vxZ-af-kWg"/>
-                            <constraint firstItem="lOs-3w-U1A" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="y09-zE-bXj"/>
-                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="webView" destination="lOs-3w-U1A" id="cco-3l-J6i"/>
+                        <outlet property="btn" destination="FVZ-TV-b7w" id="8HJ-en-O1Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="136.28185907046478"/>
+            <point key="canvasLocation" x="136.23188405797103" y="136.14130434782609"/>
         </scene>
     </scenes>
 </document>

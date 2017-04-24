@@ -24,10 +24,17 @@
     // Drag the rabbits to understand what's going on
     var SPRITE_WIDTH = window.innerWidth/3;
     var SPRITE_HEIGHT = SPRITE_WIDTH;
+    var MAX_WIDTH = 180;
 
-    if (SPRITE_WIDTH > 180) {
-      SPRITE_WIDTH = 180
-      SPRITE_HEIGHT = 180
+    if (SPRITE_WIDTH > MAX_WIDTH) {
+      SPRITE_WIDTH = MAX_WIDTH;
+      SPRITE_HEIGHT = MAX_WIDTH;
+    }
+
+    if( /Android|iPhone|iPad|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+     // some code..
+      SPRITE_WIDTH = window.innerWidth/3;
+      SPRITE_HEIGHT = SPRITE_WIDTH;
     }
 
     var app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
@@ -47,7 +54,15 @@
     
     // Log messages from the server
     connection.onmessage = function (e) {
-        console.log('Server: ' + e.data);
+        //console.log('Server: ' + e.data);
+        //prompt("You just selected an image", e.data);
+
+        if (currentSelection != null){
+          connection.send("Ping"); 
+          setPicture(e.data, currentSelection)
+        } else {
+          //connection.send("clicked me but session is nil"); 
+        }
     };
     //setupGrid();
 
@@ -59,6 +74,7 @@
     texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
      var json ;
+
 
      function readTextFile(file, callback) {
       var rawFile = new XMLHttpRequest();
@@ -225,6 +241,8 @@
         //texture = PIXI.Texture.fromImage('square_green.png');
     }
 
+    var currentSelection;
+
     function onDragStart(event) {
       // store a reference to the data
       // the reason for this is because of multitouch
@@ -234,6 +252,7 @@
       this.dragging = true;
       //if (person != null){
         connection.send(this.x + " " + this.y); 
+        currentSelection = this
         //textureWithName(person, this);
       // }
       //var person = prompt("Please enter your name", "Harry Potter");

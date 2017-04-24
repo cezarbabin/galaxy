@@ -10,29 +10,50 @@ import UIKit
 import Swifter
 import Starscream
 import Photos
+import WebKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var webView: UIWebView!
+    var webView: WKWebView!
     
     var socket = WebSocket(url: URL(string: "ws://127.0.0.1:8080/websocket-echo")!, protocols: ["chat", "superchat"])
     var imagePicker = UIImagePickerController()
     
+    @IBOutlet weak var btn: UIButton!
+    
+    
     @IBAction func imagePickerPressed(sender: UIButton) {
-        self.imagePicker.delegate = self
-        self.imagePicker.sourceType = .savedPhotosAlbum;
-        self.imagePicker.allowsEditing = false
         self.present(self.imagePicker, animated: true, completion: nil)
     }
     
+    var session : WebSocketSession?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+                // Do any additional setup after loading the view, typically from a nib.
+        let webConfiguration = WKWebViewConfiguration()
+        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.uiDelegate = self
+        //webView.bringSubview(toFront: btn)
+        //view = webView
+        
+        view = webView
+        //view.bringSubview(toFront: webView)
+        view.addSubview(btn)
+        
+        self.imagePicker.delegate = self
+        self.imagePicker.sourceType = .savedPhotosAlbum;
+        self.imagePicker.allowsEditing = false
         
         let server = HttpServer()
         server["/websocket-echo"] = websocket({ (session, text) in
-            session.writeText(text)
-            print(text)
+            //session.writeText(text)
+            print (text)
+            if text != "Ping" {
+                self.present(self.imagePicker, animated: true, completion: nil)
+                //print("session is a kind of \(session.class)")
+                self.session = session
+            }
         }, { (session, binary) in
             session.writeBinary(binary)
         })
@@ -47,6 +68,10 @@ class ViewController: UIViewController {
         startWebSocket()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        //view.bringSubview(toFront: btn)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -103,7 +128,7 @@ class ViewController: UIViewController {
         
         let myRequest = NSURLRequest(url: URL(string: "http://127.0.0.1:9080")!)
         
-        self.webView.loadRequest(myRequest as URLRequest)
+        self.webView.load(myRequest as URLRequest)
     }
 
 }
@@ -112,7 +137,7 @@ extension ViewController : WebSocketDelegate {
     
     func websocketDidConnect(socket: WebSocket) {
         print ("websocket is connected")
-        socket.write(string:"Hello")
+        //socket.write(string:"Hello")
     }
     
     func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
@@ -155,10 +180,15 @@ extension ViewController : UIImagePickerControllerDelegate {
                 newData.write(toFile: currentDirectoryURL.path + "/1.png", atomically: true)
                 print ("Success \(currentDirectoryURL.path)")
                 
+                if self.session != nil {
+                    self.session?.writeText("1.png")
+                    print ("Inside session")
+                }
+                
                 
                 do {
                     let directoryContents = try FileManager.default.contentsOfDirectory(at: currentDirectoryURL, includingPropertiesForKeys: nil, options: [])
-                    print(directoryContents)
+                    //print(directoryContents)
                 } catch let error as NSError {
                     print(error.localizedDescription)
                 }
@@ -183,5 +213,9 @@ extension ViewController : UIImagePickerControllerDelegate {
 
 extension ViewController : UINavigationControllerDelegate {
     
+}
+
+extension ViewController : WKUIDelegate {
+   
 }
 

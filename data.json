@@ -1,8 +1,8 @@
 {
 	"config":"square",
 	"1":{
-		"type":"image",
-		"name":"square_red.png"
+		"type":"video",
+		"name":"testVideo.mp4"
 	},
 	"2":{
 		"type":"image",

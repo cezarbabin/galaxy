@@ -45,6 +45,8 @@ class ViewController: UIViewController {
         self.imagePicker.sourceType = .savedPhotosAlbum;
         self.imagePicker.allowsEditing = false
         
+        moveFilesToDocs()
+        
         let server = HttpServer()
         server["/websocket-echo"] = websocket({ (session, text) in
             //session.writeText(text)
@@ -77,6 +79,14 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func moveFilesToDocs(){
+        copyBundleToDocs(name:"index", ext:".html")
+        copyBundleToDocs(name:"pixi", ext:".js")
+        copyBundleToDocs(name:"mini", ext:".jpg")
+        copyBundleToDocs(name:"index", ext:".html")
+        copyBundleToDocs(name:"data", ext:".json")
+    }
+    
     func startWebSocket () {
         self.socket.delegate = self
         self.socket.connect()
@@ -85,7 +95,7 @@ class ViewController: UIViewController {
     func startServer () {
         let server = demoServer(Bundle.main.resourcePath!)
         
-        let currentDirectoryURL = URL(fileURLWithPath: Bundle.main.resourcePath!)
+        let currentDirectoryURL =  URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])!
         
         let editorURL = URL(string: "Editor", relativeTo:currentDirectoryURL)
         
@@ -167,13 +177,13 @@ extension ViewController : UIImagePickerControllerDelegate {
         print (info)
         
         let currentUrl = info["UIImagePickerControllerReferenceURL"] as! URL
-        print(currentUrl)
+        //print(currentUrl)
         let imageName = (currentUrl.absoluteString as NSString)
             .replacingOccurrences(of: "assets-library://asset/asset.PNG?id=", with: "")
             .replacingOccurrences(of:"&ext=PNG", with:"")
             .replacingOccurrences(of: "assets-library://asset/asset.JPG?id=", with: "")
             .replacingOccurrences(of:"&ext=JPG", with:"")
-        print(imageName)
+        //print(imageName)
         //let fileManager = FileManager.default
         
         var item: PHAsset = PHAsset.fetchAssets(withALAssetURLs: [currentUrl], options: nil)[0]
@@ -183,12 +193,17 @@ extension ViewController : UIImagePickerControllerDelegate {
         phManager().requestImageData(for: item, options: options) { imageData,dataUTI,orientation,info in
             if let newData:NSData = imageData! as NSData
             {
-                newData.write(toFile: currentDirectoryURL.path + "/\(imageName).png", atomically: true)
-                //print ("Success \(currentDirectoryURL.path)")
+                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+                newData.write(toFile: documentsPath + "/\(imageName).png", atomically: true)
+                print ("Success \(currentDirectoryURL.path)")
+                
+                
+
+                print ("Docs \(documentsPath)")
                 
                 if self.session != nil {
                     self.session?.writeText("/\(imageName).png")
-                    print ("Inside session")
+                    //print ("Inside session")
                 }
                 
                 
@@ -196,7 +211,7 @@ extension ViewController : UIImagePickerControllerDelegate {
                     let directoryContents = try FileManager.default.contentsOfDirectory(at: currentDirectoryURL, includingPropertiesForKeys: nil, options: [])
                     //print(directoryContents)
                 } catch let error as NSError {
-                    print(error.localizedDescription)
+                    //print(error.localizedDescription)
                 }
             }
         }
@@ -214,6 +229,28 @@ extension ViewController : UIImagePickerControllerDelegate {
          */
         
         self.dismiss(animated: true, completion: { () -> Void in })
+    }
+    
+    func copyBundleToDocs(name:String, ext:String) {
+        let bundlePath = Bundle.main.path(forResource: name, ofType: ext)
+        //print(bundlePath, "\n") //prints the correct path
+        
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        
+        //let destPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+        let fileManager = FileManager.default
+        
+        let fullDestPath = NSURL(fileURLWithPath: documentsPath).appendingPathComponent(name + ext)
+        
+        let fullDestPathString = fullDestPath?.path
+        print(fileManager.fileExists(atPath: bundlePath!)) // prints true
+        
+        do{
+            try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
+        }catch{
+            print("\n ////?ERRROR")
+            print(error)
+        }
     }
 }
 

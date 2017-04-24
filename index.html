@@ -59,7 +59,7 @@
 
         if (currentSelection != null){
           connection.send("Ping"); 
-          setPicture(e.data, currentSelection)
+          setPicture("../" + e.data, currentSelection)
         } else {
           //connection.send("clicked me but session is nil"); 
         }

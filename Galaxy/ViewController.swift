@@ -167,8 +167,14 @@ extension ViewController : UIImagePickerControllerDelegate {
         print (info)
         
         let currentUrl = info["UIImagePickerControllerReferenceURL"] as! URL
-
-        let fileManager = FileManager.default
+        print(currentUrl)
+        let imageName = (currentUrl.absoluteString as NSString)
+            .replacingOccurrences(of: "assets-library://asset/asset.PNG?id=", with: "")
+            .replacingOccurrences(of:"&ext=PNG", with:"")
+            .replacingOccurrences(of: "assets-library://asset/asset.JPG?id=", with: "")
+            .replacingOccurrences(of:"&ext=JPG", with:"")
+        print(imageName)
+        //let fileManager = FileManager.default
         
         var item: PHAsset = PHAsset.fetchAssets(withALAssetURLs: [currentUrl], options: nil)[0]
         let phManager = PHImageManager.default
@@ -177,11 +183,11 @@ extension ViewController : UIImagePickerControllerDelegate {
         phManager().requestImageData(for: item, options: options) { imageData,dataUTI,orientation,info in
             if let newData:NSData = imageData! as NSData
             {
-                newData.write(toFile: currentDirectoryURL.path + "/1.png", atomically: true)
-                print ("Success \(currentDirectoryURL.path)")
+                newData.write(toFile: currentDirectoryURL.path + "/\(imageName).png", atomically: true)
+                //print ("Success \(currentDirectoryURL.path)")
                 
                 if self.session != nil {
-                    self.session?.writeText("1.png")
+                    self.session?.writeText("/\(imageName).png")
                     print ("Inside session")
                 }
                 

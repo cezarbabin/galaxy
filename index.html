@@ -102,57 +102,50 @@
     });
     */
    
-
+    var locationDict = {};
     function setupGrid() {
       for (var i = 0; i < 9; i++) {
-        if (i == 0)
-          createBunny(
-              Math.floor(app.renderer.width/2), 
-              Math.floor(app.renderer.height/2),
-              checkData(1)
-          );
-        if (i == 1)
-          createBunny(
-              Math.floor(app.renderer.width/2 + SPRITE_WIDTH), 
-              Math.floor(app.renderer.height/2),
-              checkData(i)
-          );
-        if (i == 2)
-          createBunny(
-              Math.floor(app.renderer.width/2 - SPRITE_WIDTH), 
-              Math.floor(app.renderer.height/2),
-              checkData(i)
-          );
-        if (i == 3)
-          createBunny(
-              Math.floor(app.renderer.width/2), 
-              Math.floor(app.renderer.height/2 + SPRITE_HEIGHT)
-          );
-        if (i == 4)
-          createBunny(
-              Math.floor(app.renderer.width/2 + SPRITE_WIDTH), 
-              Math.floor(app.renderer.height/2 + SPRITE_HEIGHT)
-          );
-        if (i == 5)
-          createBunny(
-              Math.floor(app.renderer.width/2 - SPRITE_WIDTH), 
-              Math.floor(app.renderer.height/2 + SPRITE_HEIGHT)
-          );
-        if (i == 6)
-          createBunny(
-              Math.floor(app.renderer.width/2), 
-              Math.floor(app.renderer.height/2 - SPRITE_HEIGHT)
-          );
-        if (i == 7)
-          createBunny(
-              Math.floor(app.renderer.width/2 + SPRITE_WIDTH), 
-              Math.floor(app.renderer.height/2 - SPRITE_HEIGHT)
-          );
-        if (i == 8)
-          createBunny(
-              Math.floor(app.renderer.width/2 - SPRITE_WIDTH), 
-              Math.floor(app.renderer.height/2 - SPRITE_HEIGHT)
-          );
+        var x;
+        var y;
+        if (i == 0){
+          x = Math.floor(app.renderer.width/2);
+          y = Math.floor(app.renderer.height/2);
+        }
+        if (i == 1){
+          x = Math.floor(app.renderer.width/2 + SPRITE_WIDTH);
+          y = Math.floor(app.renderer.height/2);
+        }
+        if (i == 2){
+          x = Math.floor(app.renderer.width/2 - SPRITE_WIDTH); 
+          y = Math.floor(app.renderer.height/2);
+        }
+        if (i == 3){
+          x = Math.floor(app.renderer.width/2);
+          y = Math.floor(app.renderer.height/2 + SPRITE_HEIGHT);
+        }
+        if (i == 4){
+          x = Math.floor(app.renderer.width/2 + SPRITE_WIDTH);
+          y = Math.floor(app.renderer.height/2 + SPRITE_HEIGHT);
+        }
+        if (i == 5){
+          x = Math.floor(app.renderer.width/2 - SPRITE_WIDTH);
+          y = Math.floor(app.renderer.height/2 + SPRITE_HEIGHT);
+        }
+        if (i == 6){
+          x = Math.floor(app.renderer.width/2);
+          y = Math.floor(app.renderer.height/2 - SPRITE_HEIGHT);
+        }
+        if (i == 7){
+          x = Math.floor(app.renderer.width/2 + SPRITE_WIDTH);
+          y = Math.floor(app.renderer.height/2 - SPRITE_HEIGHT);
+        }
+        if (i == 8){
+          x = Math.floor(app.renderer.width/2 - SPRITE_WIDTH);
+          y = Math.floor(app.renderer.height/2 - SPRITE_HEIGHT);
+        }
+        createBunny(x, y, checkData(i));
+        var key = String([parseInt(x),parseInt(y)])
+        locationDict[key] = i;
       }
     }
 
@@ -251,7 +244,7 @@
       //this.alpha = 0.5;
       this.dragging = true;
       //if (person != null){
-        connection.send(this.x + " " + this.y); 
+        connection.send(locationDict[String([this.x, this.y])]); 
         currentSelection = this
         //textureWithName(person, this);
       // }

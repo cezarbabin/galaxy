@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     }
     
     var session : WebSocketSession?
+    var element : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +48,7 @@ class ViewController: UIViewController {
         
         moveFilesToDocs()
         
-        saveJsonData()
+        //saveJsonData()
         
         let server = HttpServer()
         server["/websocket-echo"] = websocket({ (session, text) in
@@ -57,6 +58,7 @@ class ViewController: UIViewController {
                 self.present(self.imagePicker, animated: true, completion: nil)
                 //print("session is a kind of \(session.class)")
                 self.session = session
+                self.element = text
             }
         }, { (session, binary) in
             session.writeBinary(binary)
@@ -170,8 +172,10 @@ extension ViewController : WebSocketDelegate {
 extension ViewController : UIImagePickerControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print ("HERE::::")
-        self.dismiss(animated: true, completion: { () -> Void in print ("INSIDE::::") })
+        //print ("HERE::::")
+        self.dismiss(animated: true, completion: { () -> Void in
+            //print ("INSIDE::::") 
+        })
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -206,6 +210,8 @@ extension ViewController : UIImagePickerControllerDelegate {
                 
                 if self.session != nil {
                     self.session?.writeText("/\(imageName).png")
+                    //let e =
+                    self.saveJsonData(type:"image", name:"/\(imageName).png", element:self.element!)
                     //print ("Inside session")
                 }
                 
@@ -234,7 +240,7 @@ extension ViewController : UIImagePickerControllerDelegate {
         self.dismiss(animated: true, completion: { () -> Void in })
     }
     
-    func saveJsonData(){
+    func saveJsonData(type:String, name:String, element:String){
         let path = NSSearchPathForDirectoriesInDomains(
             .documentDirectory,
             .userDomainMask,
@@ -245,7 +251,7 @@ extension ViewController : UIImagePickerControllerDelegate {
         do{
             validDictionary = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers) as![String : [String : Any]]
             print(validDictionary)
-            validDictionary["5"] = ["img" : "blea", "imgt" : "OIOIOI"]
+            validDictionary[element] = ["type" : type, "name" : name]
             print(validDictionary)
             
             let rawData: NSData!
@@ -291,10 +297,11 @@ extension ViewController : UIImagePickerControllerDelegate {
         print(fileManager.fileExists(atPath: bundlePath!)) // prints true
         
         do{
-            if ext == ".json" {
+            if ext == ".html" {
                 print ("YES JSON")
 
                 //try fileManager.removeItem(at: fullDestPath!)
+                //try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             } else {
                 try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             }

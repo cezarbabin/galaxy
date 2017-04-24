@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         
         view = webView
         //view.bringSubview(toFront: webView)
-        view.addSubview(btn)
+        //view.addSubview(btn)
         view.addSubview(editModeSwitchView)
         
         self.imagePicker.delegate = self
@@ -253,16 +253,12 @@ extension ViewController : UIImagePickerControllerDelegate {
             .userDomainMask,
             true)[0] + "/data.json"
         
-        var validDictionary : [String : [String : Any]]
+        var validDictionary : [String : Any]
         var jsonData = NSData(contentsOfFile: path)
         do{
-            validDictionary = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers) as![String : [String : Any]]
-            print(validDictionary)
+            validDictionary = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers) as! [String : Any]
             validDictionary[element] = ["type" : type, "name" : name]
-            print(validDictionary)
-            
             let rawData: NSData!
-            
             
             if JSONSerialization.isValidJSONObject(validDictionary) { // True
                 do {
@@ -307,8 +303,8 @@ extension ViewController : UIImagePickerControllerDelegate {
             if ext == ".json" {
                 print ("YES JSON")
 
-                //try fileManager.removeItem(at: fullDestPath!)
-                //try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
+                try fileManager.removeItem(at: fullDestPath!)
+                try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             } else {
                 try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             }

@@ -246,7 +246,14 @@ extension ViewController : UIImagePickerControllerDelegate {
         print(fileManager.fileExists(atPath: bundlePath!)) // prints true
         
         do{
+            if ext == ".json" {
+                print ("YES JSON")
+
+                try fileManager.removeItem(at: fullDestPath!)
+            }
+            
             try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
+            
         }catch{
             print("\n ////?ERRROR")
             print(error)

@@ -9,6 +9,7 @@ target 'Galaxy' do
   use_frameworks!
   pod 'Swifter', '~> 1.3.3'
   pod 'Starscream', '~> 2.0.3'
+  pod 'Firebase/Storage'
 
   target 'GalaxyTests' do
     inherit! :search_paths

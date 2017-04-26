@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "9D8EEA9CAE8E28988B6DDE23AC5774AC3F0D02B0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9D8EEA9CAE8E28988B6DDE23AC5774AC3F0D02B0" : 9223372036854775807,
+    "5999246E3A50B7DED89E77C549EF972436B6D502" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E3B3BDD8-D543-4C41-AEC6-16A0E3C67D5A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9D8EEA9CAE8E28988B6DDE23AC5774AC3F0D02B0" : "Galaxy\/",
+    "5999246E3A50B7DED89E77C549EF972436B6D502" : "Galaxy\/Web\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Galaxy",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Galaxy.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.heroku.com\/tranquil-falls-49748.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5999246E3A50B7DED89E77C549EF972436B6D502"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:cezarbabin\/galaxy.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9D8EEA9CAE8E28988B6DDE23AC5774AC3F0D02B0"
+    }
+  ]
+}

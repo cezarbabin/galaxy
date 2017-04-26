@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		2921D41636744FBCCC1D2949 /* Pods_GalaxyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B54E5784D2904E84D8EBD9 /* Pods_GalaxyUITests.framework */; };
+		54098E281EB05BFD000D611A /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 54098E241EB05BFD000D611A /* data.json */; };
+		54098E291EB05BFD000D611A /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 54098E251EB05BFD000D611A /* index.html */; };
+		54098E2A1EB05BFD000D611A /* mini.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54098E261EB05BFD000D611A /* mini.jpg */; };
+		54098E2B1EB05BFD000D611A /* pixi.js in Resources */ = {isa = PBXBuildFile; fileRef = 54098E271EB05BFD000D611A /* pixi.js */; };
+		54098E2D1EB05EBD000D611A /* square_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 54098E2C1EB05EBD000D611A /* square_green.png */; };
+		54098E2F1EB060B2000D611A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54098E2E1EB060B2000D611A /* GoogleService-Info.plist */; };
+		54098E311EB06263000D611A /* FileUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54098E301EB06263000D611A /* FileUploader.swift */; };
 		545F36D51EABE1C4000811E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36D41EABE1C4000811E3 /* AppDelegate.swift */; };
 		545F36D71EABE1C4000811E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36D61EABE1C4000811E3 /* ViewController.swift */; };
 		545F36DA1EABE1C5000811E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 545F36D81EABE1C5000811E3 /* Main.storyboard */; };
@@ -16,12 +23,6 @@
 		545F36EA1EABE1C5000811E3 /* GalaxyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36E91EABE1C5000811E3 /* GalaxyTests.swift */; };
 		545F36F51EABE1C5000811E3 /* GalaxyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36F41EABE1C5000811E3 /* GalaxyUITests.swift */; };
 		545F37091EABE2B7000811E3 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 545F37031EABE2B7000811E3 /* index.html */; };
-		545F370A1EABE2B7000811E3 /* mini.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 545F37041EABE2B7000811E3 /* mini.jpg */; };
-		545F370B1EABE2B7000811E3 /* pixi.js in Resources */ = {isa = PBXBuildFile; fileRef = 545F37051EABE2B7000811E3 /* pixi.js */; };
-		545F370C1EABE2B7000811E3 /* square_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 545F37061EABE2B7000811E3 /* square_green.png */; };
-		545F370D1EABE2B7000811E3 /* square_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 545F37071EABE2B7000811E3 /* square_red.png */; };
-		545F370E1EABE2B7000811E3 /* testVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 545F37081EABE2B7000811E3 /* testVideo.mp4 */; };
-		545F37111EAD00D9000811E3 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 545F37101EAD00D9000811E3 /* data.json */; };
 		A541D2CA373DFFFC5E51BA44 /* Pods_Galaxy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BA88A2F87DDE2EABF7A86D /* Pods_Galaxy.framework */; };
 		E9EC66C666ABA9B408F5C87E /* Pods_GalaxyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F589318746243D61E108968 /* Pods_GalaxyTests.framework */; };
 /* End PBXBuildFile section */
@@ -49,6 +50,13 @@
 		24C6820BA270109443D1BF82 /* Pods-GalaxyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GalaxyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GalaxyUITests/Pods-GalaxyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		32E0F284C80EC8E7FDC9E47D /* Pods-Galaxy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Galaxy/Pods-Galaxy.release.xcconfig"; sourceTree = "<group>"; };
 		34DD762067286374B44C853B /* Pods-Galaxy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Galaxy/Pods-Galaxy.debug.xcconfig"; sourceTree = "<group>"; };
+		54098E241EB05BFD000D611A /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = data.json; path = Web/data.json; sourceTree = "<group>"; };
+		54098E251EB05BFD000D611A /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = Web/index.html; sourceTree = "<group>"; };
+		54098E261EB05BFD000D611A /* mini.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = mini.jpg; path = Web/mini.jpg; sourceTree = "<group>"; };
+		54098E271EB05BFD000D611A /* pixi.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = pixi.js; path = Web/pixi.js; sourceTree = "<group>"; };
+		54098E2C1EB05EBD000D611A /* square_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = square_green.png; path = Web/square_green.png; sourceTree = "<group>"; };
+		54098E2E1EB060B2000D611A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		54098E301EB06263000D611A /* FileUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUploader.swift; sourceTree = "<group>"; };
 		545F36D11EABE1C4000811E3 /* Galaxy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Galaxy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		545F36D41EABE1C4000811E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		545F36D61EABE1C4000811E3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,12 +71,6 @@
 		545F36F41EABE1C5000811E3 /* GalaxyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyUITests.swift; sourceTree = "<group>"; };
 		545F36F61EABE1C5000811E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		545F37031EABE2B7000811E3 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
-		545F37041EABE2B7000811E3 /* mini.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mini.jpg; sourceTree = "<group>"; };
-		545F37051EABE2B7000811E3 /* pixi.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = pixi.js; sourceTree = "<group>"; };
-		545F37061EABE2B7000811E3 /* square_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = square_green.png; sourceTree = "<group>"; };
-		545F37071EABE2B7000811E3 /* square_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = square_red.png; sourceTree = "<group>"; };
-		545F37081EABE2B7000811E3 /* testVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = testVideo.mp4; sourceTree = "<group>"; };
-		545F37101EAD00D9000811E3 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		65B54E5784D2904E84D8EBD9 /* Pods_GalaxyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GalaxyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F589318746243D61E108968 /* Pods_GalaxyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GalaxyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A62EF89F7C8896ECE748989A /* Pods-GalaxyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GalaxyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GalaxyTests/Pods-GalaxyTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +137,8 @@
 				545F36DB1EABE1C5000811E3 /* Assets.xcassets */,
 				545F36DD1EABE1C5000811E3 /* LaunchScreen.storyboard */,
 				545F36E01EABE1C5000811E3 /* Info.plist */,
+				54098E2E1EB060B2000D611A /* GoogleService-Info.plist */,
+				54098E301EB06263000D611A /* FileUploader.swift */,
 			);
 			path = Galaxy;
 			sourceTree = "<group>";
@@ -160,13 +164,12 @@
 		545F37021EABE285000811E3 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				54098E2C1EB05EBD000D611A /* square_green.png */,
+				54098E241EB05BFD000D611A /* data.json */,
+				54098E251EB05BFD000D611A /* index.html */,
+				54098E261EB05BFD000D611A /* mini.jpg */,
+				54098E271EB05BFD000D611A /* pixi.js */,
 				545F37031EABE2B7000811E3 /* index.html */,
-				545F37041EABE2B7000811E3 /* mini.jpg */,
-				545F37051EABE2B7000811E3 /* pixi.js */,
-				545F37061EABE2B7000811E3 /* square_green.png */,
-				545F37071EABE2B7000811E3 /* square_red.png */,
-				545F37081EABE2B7000811E3 /* testVideo.mp4 */,
-				545F37101EAD00D9000811E3 /* data.json */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -319,16 +322,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				545F370B1EABE2B7000811E3 /* pixi.js in Resources */,
 				545F36DF1EABE1C5000811E3 /* LaunchScreen.storyboard in Resources */,
-				545F370A1EABE2B7000811E3 /* mini.jpg in Resources */,
-				545F37111EAD00D9000811E3 /* data.json in Resources */,
+				54098E2D1EB05EBD000D611A /* square_green.png in Resources */,
 				545F37091EABE2B7000811E3 /* index.html in Resources */,
-				545F370D1EABE2B7000811E3 /* square_red.png in Resources */,
-				545F370E1EABE2B7000811E3 /* testVideo.mp4 in Resources */,
 				545F36DC1EABE1C5000811E3 /* Assets.xcassets in Resources */,
+				54098E291EB05BFD000D611A /* index.html in Resources */,
+				54098E2B1EB05BFD000D611A /* pixi.js in Resources */,
+				54098E281EB05BFD000D611A /* data.json in Resources */,
+				54098E2F1EB060B2000D611A /* GoogleService-Info.plist in Resources */,
 				545F36DA1EABE1C5000811E3 /* Main.storyboard in Resources */,
-				545F370C1EABE2B7000811E3 /* square_green.png in Resources */,
+				54098E2A1EB05BFD000D611A /* mini.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +496,7 @@
 			files = (
 				545F36D71EABE1C4000811E3 /* ViewController.swift in Sources */,
 				545F36D51EABE1C4000811E3 /* AppDelegate.swift in Sources */,
+				54098E311EB06263000D611A /* FileUploader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

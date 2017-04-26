@@ -11,6 +11,7 @@ import Swifter
 import Starscream
 import Photos
 import WebKit
+import Firebase
 
 class ViewController: UIViewController {
 
@@ -32,22 +33,52 @@ class ViewController: UIViewController {
         self.present(self.imagePicker, animated: true, completion: nil)
     }
     
+    @IBAction func publishPage(_ sender: Any) {
+        //open the json file
+        //FileUploader.getUrlForFile(fileName:"square_green", fileExt:".png")
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory,
+            .userDomainMask,
+            true)[0]
+        //let pathWithScheme = NSURL(fileURLWithPath: path).path
+        
+        let json : [String : Any]? = retrieveJsonData()
+        
+        if json != nil {
+            for (element, properties) in json! {
+                if element != "config" {
+                let properties = properties as! [String : String]
+                   if properties != nil {
+                        let name = properties["name"]
+                        let fileName = name!.replacingOccurrences(of: ".png", with: "")
+                        FileUploader.uploadAndUpdateFileWith(filePath: (path + "/" + name!), fileName: fileName, fileExt: ".png"){ (url, error) in
+                            print(url)
+                        }
+
+                    }
+                }
+            }
+        }
+        
+        FileUploader.uploadAndUpdateFileWith(filePath: path + "/data.json", fileName: "data", fileExt: ".json"){ (url, error) in
+            print(url)
+        }
+        
+    }
+    
     var session : WebSocketSession?
     var element : String?
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-                // Do any additional setup after loading the view, typically from a nib.
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
-        //webView.bringSubview(toFront: btn)
-        //view = webView
-        
+
         view = webView
-        //view.bringSubview(toFront: webView)
-        //view.addSubview(btn)
         view.addSubview(editModeSwitchView)
+        view.addSubview(btn)
         
         self.imagePicker.delegate = self
         self.imagePicker.sourceType = .savedPhotosAlbum;
@@ -143,7 +174,6 @@ class ViewController: UIViewController {
          return .forbidden
          }
          
-         
          return nil // pass the request to upper layer.
          }
          */
@@ -179,26 +209,18 @@ extension ViewController : WebSocketDelegate {
 extension ViewController : UIImagePickerControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        //print ("HERE::::")
         self.dismiss(animated: true, completion: { () -> Void in
-            //print ("INSIDE::::") 
         })
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let currentDirectoryURL = URL(fileURLWithPath: Bundle.main.resourcePath!)
-        
-        print (info)
-        
         let currentUrl = info["UIImagePickerControllerReferenceURL"] as! URL
-        //print(currentUrl)
         let imageName = (currentUrl.absoluteString as NSString)
             .replacingOccurrences(of: "assets-library://asset/asset.PNG?id=", with: "")
             .replacingOccurrences(of:"&ext=PNG", with:"")
             .replacingOccurrences(of: "assets-library://asset/asset.JPG?id=", with: "")
             .replacingOccurrences(of:"&ext=JPG", with:"")
-        //print(imageName)
-        //let fileManager = FileManager.default
         
         var item: PHAsset = PHAsset.fetchAssets(withALAssetURLs: [currentUrl], options: nil)[0]
         let phManager = PHImageManager.default
@@ -209,41 +231,22 @@ extension ViewController : UIImagePickerControllerDelegate {
             {
                 let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
                 newData.write(toFile: documentsPath + "/\(imageName).png", atomically: true)
-                print ("Success \(currentDirectoryURL.path)")
-                
-                
-
-                print ("Docs \(documentsPath)")
-                
                 if self.session != nil {
                     self.session?.writeText("/\(imageName).png")
-                    //let e =
-                    self.saveJsonData(type:"image", name:"/\(imageName).png", element:self.element!)
-                    //print ("Inside session")
+                    self.saveJsonData(type:"image", name:"\(imageName).png", element:self.element!)
                 }
                 
-                
+                /* PRINT DIRECTORY
                 do {
                     let directoryContents = try FileManager.default.contentsOfDirectory(at: currentDirectoryURL, includingPropertiesForKeys: nil, options: [])
                     //print(directoryContents)
                 } catch let error as NSError {
                     //print(error.localizedDescription)
                 }
+                */
             }
         }
-        
-        /*
-        do {
-            //var pic = PHAsset.fetchAssets(withALAssetURLs: currentUrl, options: nil)
-            
-            try fileManager.copyItem(at: currentUrl as URL, to: currentDirectoryURL)
-            print("File copying succeeded")
-        }
-        catch let error as NSError {
-            print("Ooops! Something went wrong: \(error)")
-        }
-         */
-        
+
         self.dismiss(animated: true, completion: { () -> Void in })
     }
     
@@ -273,54 +276,50 @@ extension ViewController : UIImagePickerControllerDelegate {
                     
                 } catch {
                     print(error)
-                    // Handle Error
                 }
             }
-            
         } catch {
             print("Didnt open")
             print(error)
         }
+    }
+    
+    func retrieveJsonData() -> [String : Any]? {
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory,
+            .userDomainMask,
+            true)[0] + "/data.json"
         
-        
+        var validDictionary : [String : Any]
+        var jsonData = NSData(contentsOfFile: path)
+        do{
+            validDictionary = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers) as! [String : Any]
+            
+            return validDictionary
+        } catch {
+            print("There was an error opening the file")
+            print(error)
+        }
+        return nil
     }
     
     func copyBundleToDocs(name:String, ext:String) {
         let bundlePath = Bundle.main.path(forResource: name, ofType: ext)
-        //print(bundlePath, "\n") //prints the correct path
-        
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        
-        //let destPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
         let fileManager = FileManager.default
-        
         let fullDestPath = NSURL(fileURLWithPath: documentsPath).appendingPathComponent(name + ext)
-        
         let fullDestPathString = fullDestPath?.path
-        print(fileManager.fileExists(atPath: bundlePath!)) // prints true
         
         do{
             if ext == ".json" {
                 print ("YES JSON")
-                
-                //try fileManager.removeItem(at: fullDestPath!)
-                
-                
                 let fileExists = FileManager().fileExists(atPath: fullDestPathString!)
-                
                 if !fileExists {
-                    //
                     try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
                 }
- 
-
-                
             } else {
                 try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             }
-            
-            
-            
         }catch{
             print("\n ////?ERRROR")
             print(error)

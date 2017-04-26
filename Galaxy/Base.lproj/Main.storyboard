@@ -21,31 +21,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ySb-Rz-Qj0">
-                                <rect key="frame" x="136" y="28" width="51" height="31"/>
-                                <connections>
-                                    <action selector="editModeSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="Y6o-dv-9aE"/>
-                                </connections>
-                            </switch>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ee-Up-I5Z">
-                                <rect key="frame" x="103" y="469" width="115" height="55"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <state key="normal" title="PUBLISH"/>
-                                <connections>
-                                    <action selector="publishPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xsK-Tr-BXM"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="39h-K1-9oS" customClass="PassThroughView" customModule="Galaxy" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ee-Up-I5Z">
+                                        <rect key="frame" x="113" y="479" width="94" height="40"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <state key="normal" title="PUBLISH"/>
+                                        <connections>
+                                            <action selector="publishPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xsK-Tr-BXM"/>
+                                        </connections>
+                                    </button>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ySb-Rz-Qj0">
+                                        <rect key="frame" x="136" y="23" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="editModeSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="Y6o-dv-9aE"/>
+                                        </connections>
+                                    </switch>
+                                </subviews>
+                                <color key="backgroundColor" red="0.98038417100906372" green="0.88470852375030518" blue="0.054928101599216461" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="ySb-Rz-Qj0" firstAttribute="top" secondItem="39h-K1-9oS" secondAttribute="top" constant="23" id="60I-Pe-U49"/>
+                                    <constraint firstAttribute="bottom" secondItem="6ee-Up-I5Z" secondAttribute="bottom" constant="49" id="HNv-Ng-mMW"/>
+                                    <constraint firstItem="ySb-Rz-Qj0" firstAttribute="centerX" secondItem="39h-K1-9oS" secondAttribute="centerX" id="Kic-Fc-nrO"/>
+                                    <constraint firstItem="6ee-Up-I5Z" firstAttribute="centerX" secondItem="39h-K1-9oS" secondAttribute="centerX" id="dHP-R6-0jH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ySb-Rz-Qj0" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="0cK-NK-Zia"/>
-                            <constraint firstItem="ySb-Rz-Qj0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3QH-vv-bqo"/>
+                            <constraint firstItem="39h-K1-9oS" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="670-wD-3jI"/>
+                            <constraint firstItem="39h-K1-9oS" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="B2p-G5-U8a"/>
+                            <constraint firstItem="39h-K1-9oS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HdR-yr-CGM"/>
+                            <constraint firstItem="39h-K1-9oS" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="hoR-KU-u2K"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="btn" destination="6ee-Up-I5Z" id="6P0-rr-0yE"/>
                         <outlet property="editModeSwitchView" destination="ySb-Rz-Qj0" id="ubG-ic-7Mi"/>
+                        <outlet property="topView" destination="39h-K1-9oS" id="WfK-lB-EJ8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

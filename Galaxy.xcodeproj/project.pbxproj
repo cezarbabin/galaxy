@@ -15,6 +15,7 @@
 		54098E2D1EB05EBD000D611A /* square_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 54098E2C1EB05EBD000D611A /* square_green.png */; };
 		54098E2F1EB060B2000D611A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54098E2E1EB060B2000D611A /* GoogleService-Info.plist */; };
 		54098E311EB06263000D611A /* FileUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54098E301EB06263000D611A /* FileUploader.swift */; };
+		5453D3501EB10F0B00CCAAB6 /* PassThroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5453D34F1EB10F0B00CCAAB6 /* PassThroughView.swift */; };
 		545F36D51EABE1C4000811E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36D41EABE1C4000811E3 /* AppDelegate.swift */; };
 		545F36D71EABE1C4000811E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36D61EABE1C4000811E3 /* ViewController.swift */; };
 		545F36DA1EABE1C5000811E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 545F36D81EABE1C5000811E3 /* Main.storyboard */; };
@@ -57,6 +58,7 @@
 		54098E2C1EB05EBD000D611A /* square_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = square_green.png; path = Web/square_green.png; sourceTree = "<group>"; };
 		54098E2E1EB060B2000D611A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		54098E301EB06263000D611A /* FileUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUploader.swift; sourceTree = "<group>"; };
+		5453D34F1EB10F0B00CCAAB6 /* PassThroughView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassThroughView.swift; sourceTree = "<group>"; };
 		545F36D11EABE1C4000811E3 /* Galaxy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Galaxy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		545F36D41EABE1C4000811E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		545F36D61EABE1C4000811E3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				545F36E01EABE1C5000811E3 /* Info.plist */,
 				54098E2E1EB060B2000D611A /* GoogleService-Info.plist */,
 				54098E301EB06263000D611A /* FileUploader.swift */,
+				5453D34F1EB10F0B00CCAAB6 /* PassThroughView.swift */,
 			);
 			path = Galaxy;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				545F36D71EABE1C4000811E3 /* ViewController.swift in Sources */,
 				545F36D51EABE1C4000811E3 /* AppDelegate.swift in Sources */,
 				54098E311EB06263000D611A /* FileUploader.swift in Sources */,
+				5453D3501EB10F0B00CCAAB6 /* PassThroughView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

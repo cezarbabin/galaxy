@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     var imagePicker = UIImagePickerController()
     
     @IBOutlet weak var btn: UIButton!
+    @IBOutlet weak var topView: UIView!
     
     @IBOutlet weak var editModeSwitchView: UISwitch!
     @IBAction func editModeSwitch(_ sender: Any) {
@@ -69,16 +70,26 @@ class ViewController: UIViewController {
     var session : WebSocketSession?
     var element : String?
     
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        let webConfiguration = WKWebViewConfiguration()
-        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        //let webConfiguration = WKWebViewConfiguration()
+        //WKWebView()
+        webView = WKWebView(frame: .zero)
         webView.uiDelegate = self
+        webView.frame = CGRect(x: self.view.frame.origin.x,
+                               y: self.view.frame.origin.y,
+                               width: self.view.frame.size.width,
+                               height: self.view.frame.size.height)
 
-        view = webView
-        view.addSubview(editModeSwitchView)
-        view.addSubview(btn)
+        //view = webView
+        view.addSubview(webView)
+        view.bringSubview(toFront: webView)
+        view.addSubview(topView)
+        view.bringSubview(toFront: topView)
+        //view.addSubview(btn)
         
         self.imagePicker.delegate = self
         self.imagePicker.sourceType = .savedPhotosAlbum;

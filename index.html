@@ -9,19 +9,9 @@
   <script src="pixi.js"></script>
 <body>
   <script>
-    /*
-    $.getJSON("data.json", function(j) {
-      json = j;
-      setupGrid(json);
-    });
-    */
-
     var editMode = false;
 
-    //connection.send('your message');
-
-    // This is demo of pixi-display.js, https://github.com/gameofbombs/pixi-display
-    // Drag the rabbits to understand what's going on
+    // Setup all of the class vars 
     var SPRITE_WIDTH = window.innerWidth/3;
     var SPRITE_HEIGHT = SPRITE_WIDTH;
     var MAX_WIDTH = 180;
@@ -32,7 +22,6 @@
     }
 
     if( /Android|iPhone|iPad|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-     // some code..
       SPRITE_WIDTH = window.innerWidth/3;
       SPRITE_HEIGHT = SPRITE_WIDTH;
     }
@@ -78,10 +67,8 @@
     // Scale mode for pixelation
     texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
-     var json ;
-
-
-     function readTextFile(file, callback) {
+    var json;
+    function readTextFile(file, callback) {
       var rawFile = new XMLHttpRequest();
       rawFile.overrideMimeType("application/json");
       rawFile.open("GET", file, true);
@@ -93,20 +80,13 @@
       rawFile.send(null);
     }
 
-    //usage:
+    // Read the json file
     readTextFile("data.json", function(text){
       var data = JSON.parse(text);
       json = data;
       setupGrid();
     });
 
-    /*
-    $.getJSON("data.json", function(j) {
-      json = j;
-       setupGrid();
-    });
-    */
-   
     var locationDict = {};
     function setupGrid() {
       for (var i = 0; i < 9; i++) {
@@ -154,7 +134,6 @@
       }
     }
 
-    
     function checkData(index){
       if (json[index] != null){
         if (json[index]["type"] == "image"){
@@ -168,72 +147,59 @@
     }
 
     function createBunny(x, y, t) {
+      if (t != null)
+      // create our little bunny friend..
+        var bunny = new PIXI.Sprite(t)
+      else 
+        var bunny = new PIXI.Sprite(texture);
 
-        if (t != null)
-        // create our little bunny friend..
-          var bunny = new PIXI.Sprite(t)
-        else 
-          var bunny = new PIXI.Sprite(texture);
+      // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
+      bunny.interactive = true;
 
-        // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
-        bunny.interactive = true;
+      // this button mode will mean the hand cursor appears when you roll over the bunny with your mouse
+      bunny.buttonMode = true;
 
-        // this button mode will mean the hand cursor appears when you roll over the bunny with your mouse
-        bunny.buttonMode = true;
+      // center the bunny's anchor point
+      bunny.anchor.set(0.5);
 
-        // center the bunny's anchor point
-        bunny.anchor.set(0.5);
+      bunny.height = SPRITE_HEIGHT;
+      bunny.width = SPRITE_WIDTH;
 
-        // make it a bit bigger, so it's easier to grab
-        //bunny.scale.set(3);
+      //// BUTTTTON
+      bunny
+          .on('pointerdown', onDragStart)
+          .on('pointerup', onDragEnd)
+          .on('pointerupoutside', onDragEnd)
+          .on('pointermove', onDragMove);
 
-        bunny.height = SPRITE_HEIGHT;
-        bunny.width = SPRITE_WIDTH;
+          // For mouse-only events
+          // .on('mousedown', onDragStart)
+          // .on('mouseup', onDragEnd)
+          // .on('mouseupoutside', onDragEnd)
+          // .on('mousemove', onDragMove);
 
-        // setup events for mouse + touch using
-        // the pointer events
+          // For touch-only events
+          // .on('touchstart', onDragStart)
+          // .on('touchend', onDragEnd)
+          // .on('touchendoutside', onDragEnd)
+          // .on('touchmove', onDragMove);
 
-        //// BUTTTTON
-        bunny
-            .on('pointerdown', onDragStart)
-            .on('pointerup', onDragEnd)
-            .on('pointerupoutside', onDragEnd)
-            .on('pointermove', onDragMove);
+      // move the sprite to its designated position
+      bunny.x = x;
+      bunny.y = y;
 
-            // For mouse-only events
-            // .on('mousedown', onDragStart)
-            // .on('mouseup', onDragEnd)
-            // .on('mouseupoutside', onDragEnd)
-            // .on('mousemove', onDragMove);
+      // add it to the stage
+      app.stage.addChild(bunny);
 
-            // For touch-only events
-            // .on('touchstart', onDragStart)
-            // .on('touchend', onDragEnd)
-            // .on('touchendoutside', onDragEnd)
-            // .on('touchmove', onDragMove);
-
-        // move the sprite to its designated position
-        bunny.x = x;
-        bunny.y = y;
-
-        // add it to the stage
-        app.stage.addChild(bunny);
-
-        // reset texture
-        //texture = PIXI.Texture.fromImage('square_green.png');
+      // reset texture
+      //texture = PIXI.Texture.fromImage('square_green.png');
     }
 
-    
-
     var currentSelection;
-
     function onDragStart(event) {
       // store a reference to the data
       // the reason for this is because of multitouch
       // we want to track the movement of this particular touch
-      
-      //if (person != null){
-      
       if (editMode == false){
         connection.send(locationDict[String([this.x, this.y])]); 
         currentSelection = this
@@ -242,20 +208,12 @@
         //this.alpha = 0.5;
         this.dragging = true;
       }
-   
-      
-      //textureWithName(person, this);
-      // }
-      //var person = prompt("Please enter your name", "Harry Potter");
     }
 
     function textureWithName(name, obj){
       setPicture(name, obj);
     }
-
     
-    // Add to the stage
-
     function setVideo(name, obj) {
       //var textureName = name + '.mp4';
       var textureTemp = PIXI.Texture.fromVideoUrl(name);
@@ -316,6 +274,5 @@
 
   </script>
   <style>* {padding: 0; margin: 0}</style>
-
 </body>
 </html>

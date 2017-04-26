@@ -7,8 +7,66 @@
   
   <script src="jquery-3.2.1.min.js"></script>
   <script src="pixi.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
 <body>
   <script>
+
+    var PRODUCTION = false;
+    // CONFIGURE FIREBASE
+    var config = {
+      apiKey: "AIzaSyBe47WAw93XJu3eNklg0F3Lfi4A26sJOH0",
+      authDomain: "galaxy-3902a.firebaseapp.com",
+      databaseURL: "https://galaxy-3902a.firebaseio.com",
+      projectId: "galaxy-3902a",
+      storageBucket: "galaxy-3902a.appspot.com",
+      messagingSenderId: "554714163582"
+    };
+    firebase.initializeApp(config);
+
+    // Get a reference to the database service
+    var storage = firebase.storage();
+    //var pathReference = storage.ref('configs/data.json');
+
+    if (PRODUCTION){
+      storage.ref().child('configs/data.json').getDownloadURL().then(function(url) {
+          // `url` is the download URL for 'images/stars.jpg'
+
+          // This can be downloaded directly:
+          var xhr = new XMLHttpRequest();
+          xhr.responseType = 'blob';
+          xhr.onload = function(event) {
+            var blob = xhr.response;
+          };
+          xhr.open('GET', url);
+          xhr.send();
+
+          // Or inserted into an <img> element:
+          //var img = document.getElementById('myimg');
+          //img.src = url;
+
+          console.log("URL IS " + url);
+
+          readTextFile(url, function(text){
+            var data = JSON.parse(text);
+            json = data;
+            setupGrid();
+          });
+
+
+        }).catch(function(error) {
+          // Handle any errors
+          console.log("There was an error" + error);
+        });
+    } else {
+      readTextFile("data.json", function(text){
+        var data = JSON.parse(text);
+        json = data;
+        setupGrid();
+      });
+    }
+    
+
+
     var editMode = false;
 
     // Setup all of the class vars 
@@ -81,11 +139,9 @@
     }
 
     // Read the json file
-    readTextFile("data.json", function(text){
-      var data = JSON.parse(text);
-      json = data;
-      setupGrid();
-    });
+    /*
+    
+    */
 
     var locationDict = {};
     function setupGrid() {

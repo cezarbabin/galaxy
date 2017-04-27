@@ -18,10 +18,24 @@ class ViewController: UIViewController {
     var webView: WKWebView!
     
     var socket = WebSocket(url: URL(string: "ws://127.0.0.1:8080/websocket-echo")!, protocols: ["chat", "superchat"])
+    
     var imagePicker = UIImagePickerController()
+    
+    var blockSelector : BlockSelectorViewController?
     
     @IBOutlet weak var btn: UIButton!
     @IBOutlet weak var topView: UIView!
+    
+    @IBAction func temporary(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "BlockViewController")
+        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        self.blockSelector = controller as? BlockSelectorViewController
+        
+        //self.present(controller, animated: true, completion: nil)
+    }
+    
+    
     
     @IBOutlet weak var editModeSwitchView: UISwitch!
     @IBAction func editModeSwitch(_ sender: Any) {
@@ -36,12 +50,10 @@ class ViewController: UIViewController {
     
     @IBAction func publishPage(_ sender: Any) {
         //open the json file
-        //FileUploader.getUrlForFile(fileName:"square_green", fileExt:".png")
         let path = NSSearchPathForDirectoriesInDomains(
             .documentDirectory,
             .userDomainMask,
             true)[0]
-        //let pathWithScheme = NSURL(fileURLWithPath: path).path
         
         let json : [String : Any]? = retrieveJsonData()
         
@@ -64,7 +76,6 @@ class ViewController: UIViewController {
         FileUploader.uploadAndUpdateFileWith(filePath: path + "/data.json", fileName: "data", fileExt: ".json"){ (url, error) in
             print(url)
         }
-        
     }
     
     var session : WebSocketSession?
@@ -73,10 +84,7 @@ class ViewController: UIViewController {
     
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        //let webConfiguration = WKWebViewConfiguration()
-        //WKWebView()
         webView = WKWebView(frame: .zero)
         webView.uiDelegate = self
         webView.frame = CGRect(x: self.view.frame.origin.x,
@@ -84,28 +92,28 @@ class ViewController: UIViewController {
                                width: self.view.frame.size.width,
                                height: self.view.frame.size.height)
 
-        //view = webView
         view.addSubview(webView)
         view.bringSubview(toFront: webView)
         view.addSubview(topView)
         view.bringSubview(toFront: topView)
-        //view.addSubview(btn)
         
         self.imagePicker.delegate = self
         self.imagePicker.sourceType = .savedPhotosAlbum;
         self.imagePicker.allowsEditing = false
         
+        setupBlockSelector()
         moveFilesToDocs()
         
-        //saveJsonData()
         
         let server = HttpServer()
         server["/websocket-echo"] = websocket({ (session, text) in
-            //session.writeText(text)
             print (text)
             if text != "Ping" {
-                self.present(self.imagePicker, animated: true, completion: nil)
-                //print("session is a kind of \(session.class)")
+                DispatchQueue.main.async {
+                    if self.blockSelector != nil {
+                        self.present(self.blockSelector!, animated: true, completion: nil)
+                    }
+                }
                 self.session = session
                 self.element = text
             }
@@ -132,6 +140,13 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func setupBlockSelector() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "BlockViewController")
+        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        self.blockSelector = controller as? BlockSelectorViewController
+    }
+    
     func moveFilesToDocs(){
         copyBundleToDocs(name:"index", ext:".html")
         copyBundleToDocs(name:"pixi", ext:".js")
@@ -150,13 +165,7 @@ class ViewController: UIViewController {
         let server = demoServer(Bundle.main.resourcePath!)
         
         let currentDirectoryURL =  URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])!
-        
         let editorURL = URL(string: "Editor", relativeTo:currentDirectoryURL)
-        
-        let editorPath = editorURL?.path
-        
-        //print (editorPath!)
-        print ("AS STRING")
         
         do {
             let directoryContents = try FileManager.default.contentsOfDirectory(at: currentDirectoryURL, includingPropertiesForKeys: nil, options: [])
@@ -171,26 +180,8 @@ class ViewController: UIViewController {
         } catch {
             print("server could not start")
         }
-        
-        /*
-         server.middleware.append { request in
-         print(request.address!)
-         
-         guard let address = request.address else {
-         print ("//////THERE IS A REQUEST")
-         return .forbidden
-         }
-         guard ["127.0.0.1", "::1"].contains(address) else {
-         print ("//////ADDRESS FORBIDDEN \(address)")
-         return .forbidden
-         }
-         
-         return nil // pass the request to upper layer.
-         }
-         */
-        
+
         let myRequest = NSURLRequest(url: URL(string: "http://127.0.0.1:9080")!)
-        
         self.webView.load(myRequest as URLRequest)
     }
 
@@ -328,6 +319,9 @@ extension ViewController : UIImagePickerControllerDelegate {
                 if !fileExists {
                     try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
                 }
+            } else if ext == ".html" {
+                try fileManager.removeItem(atPath: fullDestPathString!)
+                try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             } else {
                 try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             }
@@ -344,5 +338,11 @@ extension ViewController : UINavigationControllerDelegate {
 
 extension ViewController : WKUIDelegate {
    
+}
+
+extension ViewController {
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 }
 

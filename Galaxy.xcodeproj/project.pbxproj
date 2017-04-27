@@ -16,14 +16,15 @@
 		54098E2F1EB060B2000D611A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54098E2E1EB060B2000D611A /* GoogleService-Info.plist */; };
 		54098E311EB06263000D611A /* FileUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54098E301EB06263000D611A /* FileUploader.swift */; };
 		5453D3501EB10F0B00CCAAB6 /* PassThroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5453D34F1EB10F0B00CCAAB6 /* PassThroughView.swift */; };
+		5453DA491EB15DAC00CCAAB6 /* BlockSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5453DA481EB15DAC00CCAAB6 /* BlockSelectorViewController.swift */; };
+		5453DA4E1EB18C3600CCAAB6 /* CurvedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5453DA4D1EB18C3600CCAAB6 /* CurvedView.swift */; };
 		545F36D51EABE1C4000811E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36D41EABE1C4000811E3 /* AppDelegate.swift */; };
 		545F36D71EABE1C4000811E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36D61EABE1C4000811E3 /* ViewController.swift */; };
 		545F36DA1EABE1C5000811E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 545F36D81EABE1C5000811E3 /* Main.storyboard */; };
-		545F36DC1EABE1C5000811E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 545F36DB1EABE1C5000811E3 /* Assets.xcassets */; };
 		545F36DF1EABE1C5000811E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 545F36DD1EABE1C5000811E3 /* LaunchScreen.storyboard */; };
 		545F36EA1EABE1C5000811E3 /* GalaxyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36E91EABE1C5000811E3 /* GalaxyTests.swift */; };
 		545F36F51EABE1C5000811E3 /* GalaxyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36F41EABE1C5000811E3 /* GalaxyUITests.swift */; };
-		545F37091EABE2B7000811E3 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 545F37031EABE2B7000811E3 /* index.html */; };
+		54F2B8611EB1C25200E4A6D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54F2B8601EB1C25200E4A6D1 /* Assets.xcassets */; };
 		A541D2CA373DFFFC5E51BA44 /* Pods_Galaxy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BA88A2F87DDE2EABF7A86D /* Pods_Galaxy.framework */; };
 		E9EC66C666ABA9B408F5C87E /* Pods_GalaxyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F589318746243D61E108968 /* Pods_GalaxyTests.framework */; };
 /* End PBXBuildFile section */
@@ -59,11 +60,12 @@
 		54098E2E1EB060B2000D611A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		54098E301EB06263000D611A /* FileUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUploader.swift; sourceTree = "<group>"; };
 		5453D34F1EB10F0B00CCAAB6 /* PassThroughView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassThroughView.swift; sourceTree = "<group>"; };
+		5453DA481EB15DAC00CCAAB6 /* BlockSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSelectorViewController.swift; sourceTree = "<group>"; };
+		5453DA4D1EB18C3600CCAAB6 /* CurvedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurvedView.swift; sourceTree = "<group>"; };
 		545F36D11EABE1C4000811E3 /* Galaxy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Galaxy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		545F36D41EABE1C4000811E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		545F36D61EABE1C4000811E3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		545F36D91EABE1C5000811E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		545F36DB1EABE1C5000811E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		545F36DE1EABE1C5000811E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		545F36E01EABE1C5000811E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		545F36E51EABE1C5000811E3 /* GalaxyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GalaxyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,7 +74,7 @@
 		545F36F01EABE1C5000811E3 /* GalaxyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GalaxyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		545F36F41EABE1C5000811E3 /* GalaxyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyUITests.swift; sourceTree = "<group>"; };
 		545F36F61EABE1C5000811E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		545F37031EABE2B7000811E3 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		54F2B8601EB1C25200E4A6D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65B54E5784D2904E84D8EBD9 /* Pods_GalaxyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GalaxyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F589318746243D61E108968 /* Pods_GalaxyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GalaxyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A62EF89F7C8896ECE748989A /* Pods-GalaxyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GalaxyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GalaxyTests/Pods-GalaxyTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -107,6 +109,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5453DA4C1EB18C1100CCAAB6 /* Extra */ = {
+			isa = PBXGroup;
+			children = (
+				5453DA4D1EB18C3600CCAAB6 /* CurvedView.swift */,
+			);
+			name = Extra;
+			sourceTree = "<group>";
+		};
 		545F36C81EABE1C4000811E3 = {
 			isa = PBXGroup;
 			children = (
@@ -133,15 +143,17 @@
 		545F36D31EABE1C4000811E3 /* Galaxy */ = {
 			isa = PBXGroup;
 			children = (
+				5453DA4C1EB18C1100CCAAB6 /* Extra */,
 				545F36D41EABE1C4000811E3 /* AppDelegate.swift */,
 				545F36D61EABE1C4000811E3 /* ViewController.swift */,
 				545F36D81EABE1C5000811E3 /* Main.storyboard */,
-				545F36DB1EABE1C5000811E3 /* Assets.xcassets */,
+				54F2B8601EB1C25200E4A6D1 /* Assets.xcassets */,
 				545F36DD1EABE1C5000811E3 /* LaunchScreen.storyboard */,
 				545F36E01EABE1C5000811E3 /* Info.plist */,
 				54098E2E1EB060B2000D611A /* GoogleService-Info.plist */,
 				54098E301EB06263000D611A /* FileUploader.swift */,
 				5453D34F1EB10F0B00CCAAB6 /* PassThroughView.swift */,
+				5453DA481EB15DAC00CCAAB6 /* BlockSelectorViewController.swift */,
 			);
 			path = Galaxy;
 			sourceTree = "<group>";
@@ -172,7 +184,6 @@
 				54098E251EB05BFD000D611A /* index.html */,
 				54098E261EB05BFD000D611A /* mini.jpg */,
 				54098E271EB05BFD000D611A /* pixi.js */,
-				545F37031EABE2B7000811E3 /* index.html */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -326,9 +337,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				545F36DF1EABE1C5000811E3 /* LaunchScreen.storyboard in Resources */,
+				54F2B8611EB1C25200E4A6D1 /* Assets.xcassets in Resources */,
 				54098E2D1EB05EBD000D611A /* square_green.png in Resources */,
-				545F37091EABE2B7000811E3 /* index.html in Resources */,
-				545F36DC1EABE1C5000811E3 /* Assets.xcassets in Resources */,
 				54098E291EB05BFD000D611A /* index.html in Resources */,
 				54098E2B1EB05BFD000D611A /* pixi.js in Resources */,
 				54098E281EB05BFD000D611A /* data.json in Resources */,
@@ -497,6 +507,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5453DA491EB15DAC00CCAAB6 /* BlockSelectorViewController.swift in Sources */,
+				5453DA4E1EB18C3600CCAAB6 /* CurvedView.swift in Sources */,
 				545F36D71EABE1C4000811E3 /* ViewController.swift in Sources */,
 				545F36D51EABE1C4000811E3 /* AppDelegate.swift in Sources */,
 				54098E311EB06263000D611A /* FileUploader.swift in Sources */,

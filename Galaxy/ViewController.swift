@@ -44,6 +44,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var editModeSwitchView: UISwitch!
     @IBAction func editModeSwitch(_ sender: Any) {
         if self.session != nil {
+            print("YES SWITCH");
             session?.writeText("switch")
         }
     }
@@ -116,19 +117,18 @@ class ViewController: UIViewController {
         let server = HttpServer()
         server["/websocket-echo"] = websocket({ (session, text) in
             print (text)
+            self.session = session
             
             // HANDLE ALL EVENTS
-            /*
             if text != "Ping" {
                 DispatchQueue.main.async {
                     if self.blockSelector != nil {
                         self.present(self.blockSelector!, animated: true, completion: nil)
                     }
                 }
-                self.session = session
+                
                 self.element = text
             }
-            */
             
         }, { (session, binary) in
             session.writeBinary(binary)

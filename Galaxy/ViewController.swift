@@ -66,6 +66,8 @@ class ViewController: UIViewController {
         
         let json : [String : Any]? = retrieveJsonData()
         
+        print (json)
+        
         if json != nil {
             for (element, properties) in json! {
                 if element != "config" {
@@ -119,8 +121,19 @@ class ViewController: UIViewController {
             print (text)
             self.session = session
             
+            var message = text.characters.split{$0 == "#"}.map(String.init)
+            if message[0] == "COORD" {
+                print ("we got coordinates")
+                                
+                
+                self.saveJsonDataPosition(index: message[1], x: message[2], y: message[3])
+               
+                
             // HANDLE ALL EVENTS
-            if text != "Ping" {
+            } else if message[0] == "PING" {
+                //print ("we got preliminary coordinates")
+                
+            } else if text != "Ping" {
                 DispatchQueue.main.async {
                     if self.blockSelector != nil {
                         self.present(self.blockSelector!, animated: true, completion: nil)
@@ -278,6 +291,43 @@ extension ViewController : UIImagePickerControllerDelegate {
         do{
             validDictionary = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers) as! [String : Any]
             validDictionary[element] = ["type" : type, "name" : name]
+            let rawData: NSData!
+            
+            if JSONSerialization.isValidJSONObject(validDictionary) { // True
+                do {
+                    rawData = try JSONSerialization.data(withJSONObject: validDictionary, options: .prettyPrinted) as NSData
+                    let success = try rawData.write(toFile: path , options: .atomic)
+                    print ("JSON WRITE SUCCEEDDE \(success)")
+                    
+                    
+                    //var jsonData = NSData(contentsOfFile: "newdata.json")
+                    //var jsonDict = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers)
+                    // -> ["stringValue": "JSON", "arrayValue": [0, 1, 2, 3, 4, 5], "numericalValue": 1]
+                    
+                } catch {
+                    print(error)
+                }
+            }
+        } catch {
+            print("Didnt open")
+            print(error)
+        }
+    }
+    
+    func saveJsonDataPosition(index:String, x:String, y:String){
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory,
+            .userDomainMask,
+            true)[0] + "/data.json"
+        
+        var validDictionary : [String : Any]
+        var jsonData = NSData(contentsOfFile: path)
+        do{
+            validDictionary = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers) as! [String : Any]
+            
+            let name = (validDictionary[index] as! [String : Any])["name"]!
+            let type = (validDictionary[index] as! [String : Any])["type"]!
+            validDictionary[index] = ["name":name , "type":type, "x" : x, "y" : y]
             let rawData: NSData!
             
             if JSONSerialization.isValidJSONObject(validDictionary) { // True

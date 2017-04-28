@@ -11,10 +11,14 @@
   <script>
     // Setup all of the class vars 
     var PRODUCTION = false;
-    var editMode = false;
+    var editMode = true;
     var SPRITE_WIDTH = window.innerWidth/3;
     var SPRITE_HEIGHT = SPRITE_WIDTH;
     var MAX_WIDTH = 180;
+    var DESKTOP_BROWSER = false;
+
+
+    //window.innerWidth/2 - SPRITE_WIDTH * 1.5
 
     if (SPRITE_WIDTH > MAX_WIDTH) {
       SPRITE_WIDTH = MAX_WIDTH;
@@ -24,6 +28,8 @@
     if( /Android|iPhone|iPad|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
       SPRITE_WIDTH = window.innerWidth/3;
       SPRITE_HEIGHT = SPRITE_WIDTH;
+    } else {
+      DESKTOP_BROWSER = true;
     }
 
     // CONFIGURE FIREBASE
@@ -124,8 +130,10 @@
     var touchduration = 1000;
     var executed = false;
 
+    var objectDict = {};
+
     function setupGrid() {
-      for (var i = 0; i < 1; i++) {
+      for (var i = 0; i < 9; i++) {
         var x;
         var y;
         if (i == 0){
@@ -164,16 +172,32 @@
           x = Math.floor(app.renderer.width/2 - SPRITE_WIDTH);
           y = Math.floor(app.renderer.height/2 - SPRITE_HEIGHT);
         }
-        checkData(i,x,y);
-        var key = String([parseInt(x),parseInt(y)])
+        var key = String([x/SPRITE_WIDTH, y/SPRITE_WIDTH])
         locationDict[key] = i;
+        checkData(i,x,y);
+        
+        //sizesDict
+        //objectDict[i] = 
       }
     }
 
     function checkData(index, x, y){
+      //console.log(json);
+
       if (PRODUCTION){
         if (json[index] != null){
           if (json[index]["type"] == "image"){
+            // Positional stuff
+            if (json[index]["x"] != null){
+              delete locationDict[String([x/SPRITE_WIDTH, y/SPRITE_WIDTH])];
+
+              x = parseFloat(json[index]["x"]*SPRITE_WIDTH)
+              y = parseFloat(json[index]["y"]*SPRITE_WIDTH)
+
+              var key = String([x/SPRITE_WIDTH, y/SPRITE_WIDTH])
+              locationDict[key] = index;
+            }
+
             getImageUrl(json[index]["name"], x, y)
             //texture = PIXI.Texture.fromImage(json[index]["name"])
           } else if (json[index]["type"] == "video"){
@@ -187,10 +211,19 @@
           } else if (json[index]["type"] == "video"){
             texture = PIXI.Texture.fromVideoUrl(json[index]["name"])
           }
+          if (json[index]["x"] != null){
+            delete locationDict[String([x/SPRITE_WIDTH, y/SPRITE_WIDTH])];
+
+              x = parseFloat(json[index]["x"]*SPRITE_WIDTH)
+              y = parseFloat(json[index]["y"]*SPRITE_WIDTH)
+
+              var key = String([x/SPRITE_WIDTH, y/SPRITE_WIDTH])
+              locationDict[key] = index;
+          }
         } else {
           texture = PIXI.Texture.fromImage('square_green.png');
         }
-        createBunny(x, y, texture)
+        createBunny(x, y, texture, index)
       }
     }
 
@@ -204,12 +237,14 @@
       });
     }
 
-    function createBunny(x, y, t) {
+    function createBunny(x, y, t, index) {
       if (t != null)
         var bunny = new PIXI.Sprite(t)
       else 
         var bunny = new PIXI.Sprite(texture);
-      console.log ("here");
+      //console.log ("here");
+
+
 
       // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
       bunny.interactive = true;
@@ -246,18 +281,38 @@
       bunny.x = x;
       bunny.y = y;
 
+      if (DESKTOP_BROWSER){
+        bunny.x = bunny.x + window.innerWidth/2 - SPRITE_WIDTH * 1.5
+      }
+
       // add it to the stage
       app.stage.addChild(bunny);
+
+      objectDict[index] = bunny; 
     }
 
+    var currentIndex;
     function onDragStart(event) {
       // store a reference to the data
       // the reason for this is because of multitouch
       // we want to track the movement of this particular touch
+      currentSelection = this;
+
+
+
+      currentIndex = locationDict[String([currentSelection.x/SPRITE_WIDTH, currentSelection.y/SPRITE_WIDTH])];
+      connection.send("PING" + "#" + 
+          currentIndex + "#" + 
+          currentSelection.x/SPRITE_WIDTH + "#" + 
+          currentSelection.y/SPRITE_WIDTH);
+      delete locationDict[String([currentSelection.x/SPRITE_WIDTH, currentSelection.y/SPRITE_WIDTH])];
+
+      console.log("index is " + currentIndex);
+
+
       if (editMode == false){
         //var obj = this;
-        currentSelection = this;
-
+        
         timer = setTimeout(function(obj){
           //executed = true;
           //this.alpha = 0.5;
@@ -331,10 +386,18 @@
     }
 
     function onDragEnd() {
+      locationDict[String([currentSelection.x/SPRITE_WIDTH, currentSelection.y/SPRITE_WIDTH])] = currentIndex;
+
       if (timer)
         clearTimeout(timer);
 
       if (!executed) {
+        connection.send("COORD" + "#" + 
+          currentIndex + "#" + 
+          currentSelection.x/SPRITE_WIDTH + "#" + 
+          currentSelection.y/SPRITE_WIDTH);
+
+        locationDict[String([currentSelection.x/SPRITE_WIDTH, currentSelection.y/SPRITE_WIDTH])];
         //connection.send(locationDict[String([currentSelection.x, currentSelection.y])]); 
       }
       
@@ -365,6 +428,8 @@
     var startSizeX = SPRITE_WIDTH;
     var startSizeY = SPRITE_HEIGHT;
 
+    var sizesDict = {}
+
     mc.on("pinch", function(ev) {
       if (!editMode){
         currentSelection.width = startSizeX * ev.scale;
@@ -376,8 +441,15 @@
       if (!editMode){
         startSizeX = currentSelection.width;
         startSizeY = currentSelection.height;
+        sizesDict[currentIndex] = (startSizeX/SPRITE_WIDTH, startSizeY/SPRITE_WIDTH);
       }
     });
+
+    window.onkeypress = function(){
+      currentSelection.scale.x *= 1.1;
+      currentSelection.scale.y *= 1.1;
+      console.log("press");
+    };
 
     /// OLLLLLLE
     ///

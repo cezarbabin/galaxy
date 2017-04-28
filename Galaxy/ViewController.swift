@@ -25,6 +25,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var btn: UIButton!
     @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var editorView: UIView!
+    
     
     @IBAction func temporary(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -35,13 +37,19 @@ class ViewController: UIViewController {
         //self.present(controller, animated: true, completion: nil)
     }
     
-    
+    @IBAction func alternateView(_ sender: Any) {
+        self.alternateView(toMain:false)
+    }
     
     @IBOutlet weak var editModeSwitchView: UISwitch!
     @IBAction func editModeSwitch(_ sender: Any) {
         if self.session != nil {
             session?.writeText("switch")
         }
+    }
+    
+    @IBAction func doneEditing(_ sender: Any) {
+        self.alternateView(toMain:true)
     }
     
     @IBAction func imagePickerPressed(sender: UIButton) {
@@ -81,8 +89,6 @@ class ViewController: UIViewController {
     var session : WebSocketSession?
     var element : String?
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         webView = WKWebView(frame: .zero)
@@ -96,6 +102,9 @@ class ViewController: UIViewController {
         view.bringSubview(toFront: webView)
         view.addSubview(topView)
         view.bringSubview(toFront: topView)
+        view.addSubview(editorView)
+        view.bringSubview(toFront: editorView)
+        editorView.isHidden = true
         
         self.imagePicker.delegate = self
         self.imagePicker.sourceType = .savedPhotosAlbum;
@@ -103,7 +112,6 @@ class ViewController: UIViewController {
         
         setupBlockSelector()
         moveFilesToDocs()
-        
         
         let server = HttpServer()
         server["/websocket-echo"] = websocket({ (session, text) in
@@ -341,6 +349,19 @@ extension ViewController : WKUIDelegate {
 }
 
 extension ViewController {
+    
+    func alternateView(toMain:Bool) {
+        print ("here")
+        if toMain {
+            editorView.isHidden = true
+            topView.isHidden = false
+        } else {
+            editorView.isHidden = false
+            topView.isHidden = true
+        }
+        
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }

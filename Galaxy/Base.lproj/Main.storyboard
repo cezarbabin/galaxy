@@ -52,6 +52,14 @@
                                             <action selector="publishPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xsK-Tr-BXM"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWg-uM-Bvs">
+                                        <rect key="frame" x="8" y="530" width="69" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Show Edit"/>
+                                        <connections>
+                                            <action selector="alternateView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="K3Q-OG-TDm"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.98038417100906372" green="0.88470852375030518" blue="0.054928101599216461" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -60,6 +68,23 @@
                                     <constraint firstAttribute="trailing" secondItem="6ee-Up-I5Z" secondAttribute="trailing" constant="8" id="Ht7-EU-Gkv"/>
                                     <constraint firstItem="ySb-Rz-Qj0" firstAttribute="centerX" secondItem="39h-K1-9oS" secondAttribute="centerX" constant="-127.5" id="Kic-Fc-nrO"/>
                                 </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MVC-zD-Msn" userLabel="EditorView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RqW-i0-YPU">
+                                        <rect key="frame" x="138" y="467" width="44" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <state key="normal" backgroundImage="bubble_action-check"/>
+                                        <connections>
+                                            <action selector="doneEditing:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cbr-id-GZd"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.98038417099999997" green="0.88470852379999998" blue="0.054928101600000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -74,6 +99,7 @@
                     <connections>
                         <outlet property="btn" destination="6ee-Up-I5Z" id="6P0-rr-0yE"/>
                         <outlet property="editModeSwitchView" destination="ySb-Rz-Qj0" id="ubG-ic-7Mi"/>
+                        <outlet property="editorView" destination="MVC-zD-Msn" id="EET-Uc-i9a"/>
                         <outlet property="topView" destination="39h-K1-9oS" id="WfK-lB-EJ8"/>
                     </connections>
                 </viewController>

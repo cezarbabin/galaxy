@@ -1,0 +1,394 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+  <script src="pixi.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+  <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+<body>
+  <script>
+    // Setup all of the class vars 
+    var PRODUCTION = false;
+    var editMode = false;
+    var SPRITE_WIDTH = window.innerWidth/3;
+    var SPRITE_HEIGHT = SPRITE_WIDTH;
+    var MAX_WIDTH = 180;
+
+    if (SPRITE_WIDTH > MAX_WIDTH) {
+      SPRITE_WIDTH = MAX_WIDTH;
+      SPRITE_HEIGHT = MAX_WIDTH;
+    }
+
+    if( /Android|iPhone|iPad|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      SPRITE_WIDTH = window.innerWidth/3;
+      SPRITE_HEIGHT = SPRITE_WIDTH;
+    }
+
+    // CONFIGURE FIREBASE
+    var config = {
+      apiKey: "AIzaSyBe47WAw93XJu3eNklg0F3Lfi4A26sJOH0",
+      authDomain: "galaxy-3902a.firebaseapp.com",
+      databaseURL: "https://galaxy-3902a.firebaseio.com",
+      projectId: "galaxy-3902a",
+      storageBucket: "galaxy-3902a.appspot.com",
+      messagingSenderId: "554714163582"
+    };
+
+    // WEBSOCKET
+    var connection = new WebSocket('ws://127.0.0.1:8080/websocket-echo', ['chat', 'superchat']);
+    
+    connection.onopen = function () {
+        connection.send('Ping'); // Send the message 'Ping' to the server
+    };
+  
+    // Log errors
+    connection.onerror = function (error) {
+        console.log('WebSocket Error ' + error);
+    };
+    
+    // Log messages from the server
+    connection.onmessage = function (e) {
+      if (currentSelection != null && e.data != "switch"){
+        connection.send("Ping"); 
+        setPicture("../" + e.data, currentSelection)
+      } else if (e.data == "switch") {
+        connection.send("Ping"); 
+        if (editMode == true){
+          editMode = false;
+        } else if (editMode == false) {
+          editMode = true
+        }
+      }
+    };
+   
+    // Get a reference to the database service
+    firebase.initializeApp(config);
+    var storage = firebase.storage();
+
+    if (PRODUCTION){
+      storage.ref().child('configs/data.json').getDownloadURL().then(function(url) {
+        // This can be downloaded directly:
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = function(event) {
+          var blob = xhr.response;
+        };
+        xhr.open('GET', url);
+        xhr.send();
+
+        readTextFile(url, function(text){
+          var data = JSON.parse(text);
+          json = data;
+          setupGrid();
+        });
+      }).catch(function(error) {
+        // Handle any errors
+        console.log("There was an error" + error);
+      });
+    } else {
+      readTextFile("data.json", function(text){
+        var data = JSON.parse(text);
+        json = data;
+        setupGrid();
+      });
+    } 
+
+    var app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
+    document.body.appendChild(app.view);
+    
+    // create a texture from an image path
+    var texture = PIXI.Texture.fromImage('square_green.png');
+    var texture_01 = PIXI.Texture.fromImage('square_red.png');
+
+    // Scale mode for pixelation
+    texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+
+    function readTextFile(file, callback) {
+      var rawFile = new XMLHttpRequest();
+      rawFile.overrideMimeType("application/json");
+      rawFile.open("GET", file, true);
+      rawFile.onreadystatechange = function() {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+          callback(rawFile.responseText);
+        }
+      }
+      rawFile.send(null);
+    }
+
+    var json;
+    var locationDict = {};
+    var currentSelection;
+    var timer;
+    var touchduration = 1000;
+    var executed = false;
+
+    function setupGrid() {
+      for (var i = 0; i < 1; i++) {
+        var x;
+        var y;
+        if (i == 0){
+          x = Math.floor(app.renderer.width/2);
+          y = Math.floor(app.renderer.height/2);
+        }
+        if (i == 1){
+          x = Math.floor(app.renderer.width/2 + SPRITE_WIDTH);
+          y = Math.floor(app.renderer.height/2);
+        }
+        if (i == 2){
+          x = Math.floor(app.renderer.width/2 - SPRITE_WIDTH); 
+          y = Math.floor(app.renderer.height/2);
+        }
+        if (i == 3){
+          x = Math.floor(app.renderer.width/2);
+          y = Math.floor(app.renderer.height/2 + SPRITE_HEIGHT);
+        }
+        if (i == 4){
+          x = Math.floor(app.renderer.width/2 + SPRITE_WIDTH);
+          y = Math.floor(app.renderer.height/2 + SPRITE_HEIGHT);
+        }
+        if (i == 5){
+          x = Math.floor(app.renderer.width/2 - SPRITE_WIDTH);
+          y = Math.floor(app.renderer.height/2 + SPRITE_HEIGHT);
+        }
+        if (i == 6){
+          x = Math.floor(app.renderer.width/2);
+          y = Math.floor(app.renderer.height/2 - SPRITE_HEIGHT);
+        }
+        if (i == 7){
+          x = Math.floor(app.renderer.width/2 + SPRITE_WIDTH);
+          y = Math.floor(app.renderer.height/2 - SPRITE_HEIGHT);
+        }
+        if (i == 8){
+          x = Math.floor(app.renderer.width/2 - SPRITE_WIDTH);
+          y = Math.floor(app.renderer.height/2 - SPRITE_HEIGHT);
+        }
+        checkData(i,x,y);
+        var key = String([parseInt(x),parseInt(y)])
+        locationDict[key] = i;
+      }
+    }
+
+    function checkData(index, x, y){
+      if (PRODUCTION){
+        if (json[index] != null){
+          if (json[index]["type"] == "image"){
+            getImageUrl(json[index]["name"], x, y)
+            //texture = PIXI.Texture.fromImage(json[index]["name"])
+          } else if (json[index]["type"] == "video"){
+            //texture = PIXI.Texture.fromVideoUrl(json[index]["name"])
+          }
+        }
+      } else {
+        if (json[index] != null){
+          if (json[index]["type"] == "image"){
+            texture = PIXI.Texture.fromImage(json[index]["name"])
+          } else if (json[index]["type"] == "video"){
+            texture = PIXI.Texture.fromVideoUrl(json[index]["name"])
+          }
+        } else {
+          texture = PIXI.Texture.fromImage('square_green.png');
+        }
+        createBunny(x, y, texture)
+      }
+    }
+
+    function getImageUrl(name, x, y) {
+      storage.ref().child('images/' + name).getDownloadURL().then(function(url) {
+        texture = PIXI.Texture.fromImage(url)
+        createBunny(x, y, texture)
+      }).catch(function(error) {
+        // Handle any errors
+        console.log("There was an error" + error);
+      });
+    }
+
+    function createBunny(x, y, t) {
+      if (t != null)
+        var bunny = new PIXI.Sprite(t)
+      else 
+        var bunny = new PIXI.Sprite(texture);
+      console.log ("here");
+
+      // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
+      bunny.interactive = true;
+
+      // this button mode will mean the hand cursor appears when you roll over the bunny with your mouse
+      bunny.buttonMode = true;
+
+      // center the bunny's anchor point
+      bunny.anchor.set(0.5);
+
+      bunny.height = SPRITE_HEIGHT;
+      bunny.width = SPRITE_WIDTH;
+
+      //// BUTTTTON
+      bunny
+        .on('pointerdown', onDragStart)
+        .on('pointerup', onDragEnd)
+        .on('pointerupoutside', onDragEnd)
+        .on('pointermove', onDragMove);
+
+        // For mouse-only events
+        // .on('mousedown', onDragStart)
+        // .on('mouseup', onDragEnd)
+        // .on('mouseupoutside', onDragEnd)
+        // .on('mousemove', onDragMove);
+
+        // For touch-only events
+        // .on('touchstart', onDragStart)
+        // .on('touchend', onDragEnd)
+        // .on('touchendoutside', onDragEnd)
+        // .on('touchmove', onDragMove);
+
+      // move the sprite to its designated position
+      bunny.x = x;
+      bunny.y = y;
+
+      // add it to the stage
+      app.stage.addChild(bunny);
+    }
+
+    function onDragStart(event) {
+      // store a reference to the data
+      // the reason for this is because of multitouch
+      // we want to track the movement of this particular touch
+      if (editMode == false){
+        //var obj = this;
+        currentSelection = this;
+
+        timer = setTimeout(function(obj){
+          //executed = true;
+          //this.alpha = 0.5;
+          //editMode = true
+          
+          //app.renderer.backgroundColor = 0x109999; 
+          //makeCircleMask(currentSelection);
+        }, touchduration); 
+        //editMode = true
+      } else {
+        this.data = event.data;
+        //this.alpha = 0.5;
+        this.dragging = true;
+      }
+    }
+
+    function makeCircleMask(bunny) {
+      var p = new PIXI.Graphics();
+      p.beginFill(0x000000);
+      p.lineStyle(0);
+      p.drawCircle(0, 0, SPRITE_HEIGHT/2);
+      p.endFill();
+
+      bunny.mask = p;
+      bunny.addChild(p);
+    }
+
+    function textureWithName(name, obj){
+      setPicture(name, obj);
+    }
+    
+    function setVideo(name, obj) {
+      var textureTemp = PIXI.Texture.fromVideoUrl(name);
+      /*
+      textureTemp.baseTexture.source.setAttribute('webkit-playsinline', '');
+      textureTemp.baseTexture.source.setAttribute('playsinline', '');
+      textureTemp.baseTexture.source.setAttribute('autoplay', '');
+      textureTemp.baseTexture.source.setAttribute('loop', '');
+      textureTemp.baseTexture.source.setAttribute('muted', 'muted');
+      textureTemp.baseTexture.source.pause();
+      */
+      obj.texture = textureTemp;
+    }
+
+    function setPicture(name, obj) {
+      var textureTemp = PIXI.Texture.fromImage(name);
+      obj.texture = textureTemp;
+    }
+
+    function setText(name, obj) {
+      var text = new PIXI.Text(name);
+      var bunny = new PIXI.Sprite(app.renderer.generateTexture(text));
+
+      // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
+      bunny.interactive = true;
+
+      // this button mode will mean the hand cursor appears when you roll over the bunny with your mouse
+      bunny.buttonMode = true;
+
+      // center the bunny's anchor point
+      bunny.anchor.set(0.5);
+
+      bunny.height = SPRITE_HEIGHT;
+      bunny.width = SPRITE_WIDTH;
+
+      bunny.x = obj.x
+      bunny.y = obj.y
+
+      app.stage.addChild(bunny);
+      app.stage.removeChild(obj);
+    }
+
+    function onDragEnd() {
+      if (timer)
+        clearTimeout(timer);
+
+      if (!executed) {
+        //connection.send(locationDict[String([currentSelection.x, currentSelection.y])]); 
+      }
+      
+      executed = false;
+
+      this.alpha = 1;
+      this.dragging = false;
+      // set the interaction data to null
+      this.data = null;
+    }
+
+    function onDragMove() {
+      if (this.dragging) {
+        var newPosition = this.data.getLocalPosition(this.parent);
+        this.x = newPosition.x;
+        this.y = newPosition.y;
+      }
+    }
+
+    ///////////////////
+    // ZOOM CONTROLS //
+    ///////////////////
+    var myElement = document.getElementsByTagName('canvas')[0];
+    var mc = new Hammer.Manager(myElement);
+    var pinch = new Hammer.Pinch();
+    mc.add([pinch]);
+    
+    var startSizeX = SPRITE_WIDTH;
+    var startSizeY = SPRITE_HEIGHT;
+
+    mc.on("pinch", function(ev) {
+      if (!editMode){
+        currentSelection.width = startSizeX * ev.scale;
+        currentSelection.height = startSizeY * ev.scale;
+      }
+    });
+
+    mc.on("pinchend", function(ev) {
+      if (!editMode){
+        startSizeX = currentSelection.width;
+        startSizeY = currentSelection.height;
+      }
+    });
+
+    /// OLLLLLLE
+    ///
+  </script>
+  <style>* {padding: 0; margin: 0}</style>
+  <style>
+    #myElement {
+      background: silver; 
+      height: 300px; 
+      text-align: center;
+    }
+  </style>
+</body>
+</html>

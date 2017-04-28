@@ -116,6 +116,9 @@ class ViewController: UIViewController {
         let server = HttpServer()
         server["/websocket-echo"] = websocket({ (session, text) in
             print (text)
+            
+            // HANDLE ALL EVENTS
+            /*
             if text != "Ping" {
                 DispatchQueue.main.async {
                     if self.blockSelector != nil {
@@ -125,6 +128,8 @@ class ViewController: UIViewController {
                 self.session = session
                 self.element = text
             }
+            */
+            
         }, { (session, binary) in
             session.writeBinary(binary)
         })
@@ -190,6 +195,8 @@ class ViewController: UIViewController {
         }
 
         let myRequest = NSURLRequest(url: URL(string: "http://127.0.0.1:9080")!)
+        
+        //let myRequest = NSURLRequest(url: URL(string: "http://codepen.io/anon/pen/NjpqER")!)
         self.webView.load(myRequest as URLRequest)
     }
 

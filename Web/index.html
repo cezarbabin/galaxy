@@ -11,7 +11,7 @@
   <script>
     // Setup all of the class vars 
     var PRODUCTION = true;
-    var editMode = true;
+    var editMode = false;
     var SPRITE_WIDTH = window.innerWidth/3;
     var SPRITE_HEIGHT = SPRITE_WIDTH;
     var MAX_WIDTH = 180;
@@ -343,40 +343,34 @@
       currentIndex = locationDict[Stringify([xRelativeToCenter/SPRITE_WIDTH, 
         (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
 
-      console.log("PING" + "#" + 
-          currentIndex + "#" + 
-          xRelativeToCenter/SPRITE_WIDTH + "#" + 
-          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
-      
-      connection.send("PING" + "#" + 
-          currentIndex + "#" + 
-          xRelativeToCenter/SPRITE_WIDTH + "#" + 
-          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
-      
-      delete locationDict[Stringify([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
-
-      //console.log("index is " + currentIndex);
-      //console.log(json);
-      //console.log(Stringify([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH]));
-
-
-
-      if (editMode == false){
+      if (editMode == true){
         //var obj = this;
+        console.log("PING" + "#" + 
+          currentIndex + "#" + 
+          xRelativeToCenter/SPRITE_WIDTH + "#" + 
+          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
+      
+        connection.send("PING" + "#" + 
+          currentIndex + "#" + 
+          xRelativeToCenter/SPRITE_WIDTH + "#" + 
+          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
+        
+        delete locationDict[Stringify([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
+
+        this.data = event.data;
+        //this.alpha = 0.5;
+        this.dragging = true;
         
         timer = setTimeout(function(obj){
           //executed = true;
           //this.alpha = 0.5;
           //editMode = true
-          
           //app.renderer.backgroundColor = 0x109999; 
           //makeCircleMask(currentSelection);
         }, touchduration); 
         //editMode = true
       } else {
-        this.data = event.data;
-        //this.alpha = 0.5;
-        this.dragging = true;
+        
       }
     }
 
@@ -449,14 +443,11 @@
           xRelativeToCenter/SPRITE_WIDTH + "#" + 
           (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
 
-      if (!executed) {
+      if (!executed && editMode == true) {
         connection.send("COORD" + "#" + 
           currentIndex + "#" + 
           xRelativeToCenter/SPRITE_WIDTH + "#" + 
           (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
-
-        //locationDict[Stringify([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
-        //connection.send(locationDict[Stringify([currentSelection.x, currentSelection.y])]); 
       }
       
       executed = false;

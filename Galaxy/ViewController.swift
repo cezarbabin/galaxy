@@ -389,13 +389,13 @@ extension ViewController : UIImagePickerControllerDelegate {
         let fullDestPathString = fullDestPath?.path
         
         do{
-            if ext == ".jso" {
+            if ext == ".json" {
                 print ("YES JSON")
                 let fileExists = FileManager().fileExists(atPath: fullDestPathString!)
                 if !fileExists {
                     try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
                 }
-            } else if ext == ".html" || ext == ".json"{
+            } else if ext == ".html" {
                 try fileManager.removeItem(atPath: fullDestPathString!)
                 try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             } else {

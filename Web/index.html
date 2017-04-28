@@ -98,7 +98,7 @@
       });
     } 
 
-    var app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
+    var app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0xf4df42});
     document.body.appendChild(app.view);
     
     // create a texture from an image path
@@ -173,7 +173,7 @@
         var fromRelativeToRealX = x + window.innerWidth/2;
         var fromRelativeToRealY = y - window.innerHeight/2;
 
-        var key = String([x/SPRITE_WIDTH , y/SPRITE_WIDTH])
+        var key = Stringify([x/SPRITE_WIDTH , y/SPRITE_WIDTH])
         
         locationDict[key] = i;
 
@@ -195,18 +195,18 @@
               var realToRelativeX = x - (window.innerWidth/2)/SPRITE_WIDTH;
               var realToRelativeY = y + (window.innerHeight/2)/SPRITE_WIDTH;
 
-              delete locationDict[String([realToRelativeX, realToRelativeY])];
+              delete locationDict[Stringify([realToRelativeX, realToRelativeY])];
 
               x = parseFloat(json[index]["x"]);
               y = parseFloat(json[index]["y"]);
 
-              var key = String([x, y])
+              var key = Stringify([x, y])
 
               x = x * SPRITE_WIDTH + 3*SPRITE_WIDTH/2// + window.innerWidth/2;
               y= y * SPRITE_WIDTH - window.innerHeight/2;
 
-              console.log(x, SPRITE_WIDTH);
-              console.log(y);
+              //console.log(x, SPRITE_WIDTH);
+              //console.log(y);
 
               x = x/SPRITE_WIDTH;
               y = y/SPRITE_WIDTH;
@@ -236,18 +236,18 @@
             var realToRelativeX = x - (window.innerWidth/2)/SPRITE_WIDTH;
             var realToRelativeY = y + (window.innerHeight/2)/SPRITE_WIDTH;
 
-            delete locationDict[String([realToRelativeX, realToRelativeY])];
+            delete locationDict[Stringify([realToRelativeX, realToRelativeY])];
 
             x = parseFloat(json[index]["x"]);
             y = parseFloat(json[index]["y"]);
 
-            var key = String([x, y])
+            var key = Stringify([x, y])
 
             x = x * SPRITE_WIDTH + 3*SPRITE_WIDTH/2// + window.innerWidth/2;
             y= y * SPRITE_WIDTH - window.innerHeight/2;
 
-            console.log(x, SPRITE_WIDTH);
-            console.log(y);
+            //console.log(x, SPRITE_WIDTH);
+            //console.log(y);
 
             x = x/SPRITE_WIDTH;
             y = y/SPRITE_WIDTH;
@@ -340,19 +340,24 @@
 
       var xRelativeToCenter = currentSelection.x - window.innerWidth/2;
 
-      currentIndex = locationDict[String([xRelativeToCenter/SPRITE_WIDTH, 
+      currentIndex = locationDict[Stringify([xRelativeToCenter/SPRITE_WIDTH, 
         (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
+
+      console.log("PING" + "#" + 
+          currentIndex + "#" + 
+          xRelativeToCenter/SPRITE_WIDTH + "#" + 
+          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
       
       connection.send("PING" + "#" + 
           currentIndex + "#" + 
-          currentSelection.x/SPRITE_WIDTH + "#" + 
+          xRelativeToCenter/SPRITE_WIDTH + "#" + 
           (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
       
-      delete locationDict[String([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
+      delete locationDict[Stringify([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
 
-      console.log("index is " + currentIndex);
+      //console.log("index is " + currentIndex);
       //console.log(json);
-      //console.log(String([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH]));
+      //console.log(Stringify([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH]));
 
 
 
@@ -434,10 +439,15 @@
     function onDragEnd() {
       var xRelativeToCenter = currentSelection.x - window.innerWidth/2;
 
-      locationDict[String([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])] = currentIndex;
+      locationDict[Stringify([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])] = currentIndex;
 
       if (timer)
         clearTimeout(timer);
+
+      console.log("COORD" + "#" + 
+          currentIndex + "#" + 
+          xRelativeToCenter/SPRITE_WIDTH + "#" + 
+          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
 
       if (!executed) {
         connection.send("COORD" + "#" + 
@@ -445,8 +455,8 @@
           xRelativeToCenter/SPRITE_WIDTH + "#" + 
           (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
 
-        locationDict[String([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
-        //connection.send(locationDict[String([currentSelection.x, currentSelection.y])]); 
+        //locationDict[Stringify([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
+        //connection.send(locationDict[Stringify([currentSelection.x, currentSelection.y])]); 
       }
       
       executed = false;
@@ -498,6 +508,12 @@
       currentSelection.scale.y *= 1.1;
       console.log("press");
     };
+
+    function Stringify(arr){
+      var x = parseInt(arr[0] * 100000)/100000;
+      var y = parseInt(arr[1] * 100000)/100000;
+      return String([x, y]);
+    }
 
     /// OLLLLLLE
     ///

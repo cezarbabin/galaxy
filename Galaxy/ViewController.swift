@@ -133,6 +133,7 @@ class ViewController: UIViewController {
             // HANDLE ALL EVENTS
             } else if message[0] == "PING" {
                 //print ("we got preliminary coordinates")
+                /*
                 let path = NSSearchPathForDirectoriesInDomains(
                     .documentDirectory,
                     .userDomainMask,
@@ -141,6 +142,7 @@ class ViewController: UIViewController {
                 let json : [String : Any]? = self.retrieveJsonData()
                 
                 print (json)
+                */
                 
             } else if text != "Ping" {
                 DispatchQueue.main.async {
@@ -387,13 +389,13 @@ extension ViewController : UIImagePickerControllerDelegate {
         let fullDestPathString = fullDestPath?.path
         
         do{
-            if ext == ".json" {
+            if ext == ".jso" {
                 print ("YES JSON")
                 let fileExists = FileManager().fileExists(atPath: fullDestPathString!)
                 if !fileExists {
                     try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
                 }
-            } else if ext == ".html" || ext == ".jpg"{
+            } else if ext == ".html" || ext == ".json"{
                 try fileManager.removeItem(atPath: fullDestPathString!)
                 try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             } else {

@@ -1,45 +1,49 @@
 {
-	"config":"square",
-	"1":{
-		"type":"image",
-		"name":"mini.jpg"
-	},
-	"2":{
-		"type":"image",
-		"name":"mini.jpg"
-	},
-	"3":{
-		"type":"image",
-		"name":"mini.jpg"
-	},
-	"4":{
-		"type":"image",
-		"name":"mini.jpg"
-	},
-	"5":{
-		"type":"image",
-		"name":"mini.jpg"
-	},
-	"6":{
-		"type":"image",
-		"name":"mini.jpg"
-	},
-	"7":{
-		"type":"image",
-		"name":"mini.jpg"
-	},
-	"8":{
-		"type":"image",
-		"name":"mini.jpg"
-	},
-	"9":{
-		"type":"image",
-		"name":"mini.jpg"
-	},
-	"0":{
-		"type":"image",
-		"name":"mini.jpg",
-		"x":1.1,
-		"y":1.2
-	}
+  "2" : {
+    "type" : "image",
+    "name" : "mini.jpg"
+  },
+  "1" : {
+    "type" : "image",
+    "name" : "mini.jpg"
+  },
+  "8" : {
+    "type" : "image",
+    "name" : "mini.jpg"
+  },
+  "6" : {
+    "y" : "-1.9040816326530612",
+    "name" : "mini.jpg",
+    "x" : "0.0673469387755102",
+    "type" : "image"
+  },
+  "3" : {
+    "name" : "mini.jpg",
+    "x" : "-0.0673469387755102",
+    "type" : "image",
+    "y" : "2.093877551020408"
+  },
+  "4" : {
+    "type" : "image",
+    "name" : "mini.jpg"
+  },
+  "config" : "square",
+  "7" : {
+    "type" : "image",
+    "name" : "mini.jpg"
+  },
+  "9" : {
+    "type" : "image",
+    "name" : "mini.jpg"
+  },
+  "0" : {
+    "y" : 0,
+    "type" : "image",
+    "name" : "mini.jpg",
+    "x" : 0
+  },
+  "5" : {
+    "type" : "image",
+    "name" : "mini.jpg"
+  }
 }

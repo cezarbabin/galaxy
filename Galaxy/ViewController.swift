@@ -71,9 +71,9 @@ class ViewController: UIViewController {
         if json != nil {
             for (element, properties) in json! {
                 if element != "config" {
-                let properties = properties as! [String : String]
+                let properties = properties as! [String : Any]
                    if properties != nil {
-                        let name = properties["name"]
+                        let name = properties["name"] as! String?
                         let fileName = name!.replacingOccurrences(of: ".png", with: "")
                         FileUploader.uploadAndUpdateFileWith(filePath: (path + "/" + name!), fileName: fileName, fileExt: ".png"){ (url, error) in
                             print(url)
@@ -124,7 +124,8 @@ class ViewController: UIViewController {
             var message = text.characters.split{$0 == "#"}.map(String.init)
             if message[0] == "COORD" {
                 print ("we got coordinates")
-                                
+               
+               
                 
                 self.saveJsonDataPosition(index: message[1], x: message[2], y: message[3])
                
@@ -132,6 +133,14 @@ class ViewController: UIViewController {
             // HANDLE ALL EVENTS
             } else if message[0] == "PING" {
                 //print ("we got preliminary coordinates")
+                let path = NSSearchPathForDirectoriesInDomains(
+                    .documentDirectory,
+                    .userDomainMask,
+                    true)[0]
+                
+                let json : [String : Any]? = self.retrieveJsonData()
+                
+                print (json)
                 
             } else if text != "Ping" {
                 DispatchQueue.main.async {
@@ -384,7 +393,7 @@ extension ViewController : UIImagePickerControllerDelegate {
                 if !fileExists {
                     try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
                 }
-            } else if ext == ".html" {
+            } else if ext == ".html" || ext == ".jpg"{
                 try fileManager.removeItem(atPath: fullDestPathString!)
                 try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             } else {

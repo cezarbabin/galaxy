@@ -10,15 +10,12 @@
 <body>
   <script>
     // Setup all of the class vars 
-    var PRODUCTION = false;
+    var PRODUCTION = true;
     var editMode = true;
     var SPRITE_WIDTH = window.innerWidth/3;
     var SPRITE_HEIGHT = SPRITE_WIDTH;
     var MAX_WIDTH = 180;
     var DESKTOP_BROWSER = false;
-
-
-    //window.innerWidth/2 - SPRITE_WIDTH * 1.5
 
     if (SPRITE_WIDTH > MAX_WIDTH) {
       SPRITE_WIDTH = MAX_WIDTH;
@@ -137,44 +134,50 @@
         var x;
         var y;
         if (i == 0){
-          x = Math.floor(app.renderer.width/2);
-          y = Math.floor(app.renderer.height/2);
+          x = Math.floor(0);
+          y = Math.floor(0);
         }
         if (i == 1){
-          x = Math.floor(app.renderer.width/2 + SPRITE_WIDTH);
-          y = Math.floor(app.renderer.height/2);
+          x = Math.floor(SPRITE_WIDTH);
+          y = Math.floor(0);
         }
         if (i == 2){
-          x = Math.floor(app.renderer.width/2 - SPRITE_WIDTH); 
-          y = Math.floor(app.renderer.height/2);
+          x = Math.floor(-SPRITE_WIDTH); 
+          y = Math.floor(0);
         }
         if (i == 3){
-          x = Math.floor(app.renderer.width/2);
-          y = Math.floor(app.renderer.height/2 + SPRITE_HEIGHT);
+          x = Math.floor(0);
+          y = Math.floor(SPRITE_HEIGHT);
         }
         if (i == 4){
-          x = Math.floor(app.renderer.width/2 + SPRITE_WIDTH);
-          y = Math.floor(app.renderer.height/2 + SPRITE_HEIGHT);
+          x = Math.floor(SPRITE_WIDTH);
+          y = Math.floor(SPRITE_HEIGHT);
         }
         if (i == 5){
-          x = Math.floor(app.renderer.width/2 - SPRITE_WIDTH);
-          y = Math.floor(app.renderer.height/2 + SPRITE_HEIGHT);
+          x = Math.floor(-SPRITE_WIDTH);
+          y = Math.floor(SPRITE_HEIGHT);
         }
         if (i == 6){
-          x = Math.floor(app.renderer.width/2);
-          y = Math.floor(app.renderer.height/2 - SPRITE_HEIGHT);
+          x = Math.floor(0);
+          y = Math.floor(-SPRITE_HEIGHT);
         }
         if (i == 7){
-          x = Math.floor(app.renderer.width/2 + SPRITE_WIDTH);
-          y = Math.floor(app.renderer.height/2 - SPRITE_HEIGHT);
+          x = Math.floor(SPRITE_WIDTH);
+          y = Math.floor(-SPRITE_HEIGHT);
         }
         if (i == 8){
-          x = Math.floor(app.renderer.width/2 - SPRITE_WIDTH);
-          y = Math.floor(app.renderer.height/2 - SPRITE_HEIGHT);
+          x = Math.floor(-SPRITE_WIDTH);
+          y = Math.floor(-SPRITE_HEIGHT);
         }
-        var key = String([x/SPRITE_WIDTH, y/SPRITE_WIDTH])
+
+        var fromRelativeToRealX = x + window.innerWidth/2;
+        var fromRelativeToRealY = y - window.innerHeight/2;
+
+        var key = String([x/SPRITE_WIDTH , y/SPRITE_WIDTH])
+        
         locationDict[key] = i;
-        checkData(i,x,y);
+
+        checkData(i,fromRelativeToRealX/SPRITE_WIDTH,fromRelativeToRealY/SPRITE_WIDTH);
         
         //sizesDict
         //objectDict[i] = 
@@ -189,13 +192,31 @@
           if (json[index]["type"] == "image"){
             // Positional stuff
             if (json[index]["x"] != null){
-              delete locationDict[String([x/SPRITE_WIDTH, y/SPRITE_WIDTH])];
+              var realToRelativeX = x - (window.innerWidth/2)/SPRITE_WIDTH;
+              var realToRelativeY = y + (window.innerHeight/2)/SPRITE_WIDTH;
 
-              x = parseFloat(json[index]["x"]*SPRITE_WIDTH)
-              y = parseFloat(json[index]["y"]*SPRITE_WIDTH)
+              delete locationDict[String([realToRelativeX, realToRelativeY])];
 
-              var key = String([x/SPRITE_WIDTH, y/SPRITE_WIDTH])
+              x = parseFloat(json[index]["x"]);
+              y = parseFloat(json[index]["y"]);
+
+              var key = String([x, y])
+
+              x = x * SPRITE_WIDTH + 3*SPRITE_WIDTH/2// + window.innerWidth/2;
+              y= y * SPRITE_WIDTH - window.innerHeight/2;
+
+              console.log(x, SPRITE_WIDTH);
+              console.log(y);
+
+              x = x/SPRITE_WIDTH;
+              y = y/SPRITE_WIDTH;
+
+              if (DESKTOP_BROWSER)
+                x += (window.innerWidth - 3 * MAX_WIDTH)/(2*SPRITE_WIDTH);
+
               locationDict[key] = index;
+            } else {
+              //y -= (window.innerHeight/2)/SPRITE_WIDTH;
             }
 
             getImageUrl(json[index]["name"], x, y)
@@ -212,13 +233,31 @@
             texture = PIXI.Texture.fromVideoUrl(json[index]["name"])
           }
           if (json[index]["x"] != null){
-            delete locationDict[String([x/SPRITE_WIDTH, y/SPRITE_WIDTH])];
+            var realToRelativeX = x - (window.innerWidth/2)/SPRITE_WIDTH;
+            var realToRelativeY = y + (window.innerHeight/2)/SPRITE_WIDTH;
 
-              x = parseFloat(json[index]["x"]*SPRITE_WIDTH)
-              y = parseFloat(json[index]["y"]*SPRITE_WIDTH)
+            delete locationDict[String([realToRelativeX, realToRelativeY])];
 
-              var key = String([x/SPRITE_WIDTH, y/SPRITE_WIDTH])
-              locationDict[key] = index;
+            x = parseFloat(json[index]["x"]);
+            y = parseFloat(json[index]["y"]);
+
+            var key = String([x, y])
+
+            x = x * SPRITE_WIDTH + 3*SPRITE_WIDTH/2// + window.innerWidth/2;
+            y= y * SPRITE_WIDTH - window.innerHeight/2;
+
+            console.log(x, SPRITE_WIDTH);
+            console.log(y);
+
+            x = x/SPRITE_WIDTH;
+            y = y/SPRITE_WIDTH;
+
+            if (DESKTOP_BROWSER)
+              x += (window.innerWidth - 3 * MAX_WIDTH)/(2*SPRITE_WIDTH);
+
+            locationDict[key] = index;
+          } else {
+            //y -= (window.innerHeight/2)/SPRITE_WIDTH;
           }
         } else {
           texture = PIXI.Texture.fromImage('square_green.png');
@@ -278,12 +317,13 @@
         // .on('touchmove', onDragMove);
 
       // move the sprite to its designated position
-      bunny.x = x;
-      bunny.y = y;
+      bunny.x = x*SPRITE_WIDTH;
+      bunny.y = y*SPRITE_WIDTH + window.innerHeight;
 
-      if (DESKTOP_BROWSER){
-        bunny.x = bunny.x + window.innerWidth/2 - SPRITE_WIDTH * 1.5
-      }
+      //if (DESKTOP_BROWSER){
+        //bunny.x = bunny.x + window.innerWidth/2;
+        
+      //}
 
       // add it to the stage
       app.stage.addChild(bunny);
@@ -298,16 +338,22 @@
       // we want to track the movement of this particular touch
       currentSelection = this;
 
+      var xRelativeToCenter = currentSelection.x - window.innerWidth/2;
 
-
-      currentIndex = locationDict[String([currentSelection.x/SPRITE_WIDTH, currentSelection.y/SPRITE_WIDTH])];
+      currentIndex = locationDict[String([xRelativeToCenter/SPRITE_WIDTH, 
+        (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
+      
       connection.send("PING" + "#" + 
           currentIndex + "#" + 
           currentSelection.x/SPRITE_WIDTH + "#" + 
-          currentSelection.y/SPRITE_WIDTH);
-      delete locationDict[String([currentSelection.x/SPRITE_WIDTH, currentSelection.y/SPRITE_WIDTH])];
+          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
+      
+      delete locationDict[String([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
 
       console.log("index is " + currentIndex);
+      //console.log(json);
+      //console.log(String([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH]));
+
 
 
       if (editMode == false){
@@ -386,7 +432,9 @@
     }
 
     function onDragEnd() {
-      locationDict[String([currentSelection.x/SPRITE_WIDTH, currentSelection.y/SPRITE_WIDTH])] = currentIndex;
+      var xRelativeToCenter = currentSelection.x - window.innerWidth/2;
+
+      locationDict[String([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])] = currentIndex;
 
       if (timer)
         clearTimeout(timer);
@@ -394,10 +442,10 @@
       if (!executed) {
         connection.send("COORD" + "#" + 
           currentIndex + "#" + 
-          currentSelection.x/SPRITE_WIDTH + "#" + 
-          currentSelection.y/SPRITE_WIDTH);
+          xRelativeToCenter/SPRITE_WIDTH + "#" + 
+          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
 
-        locationDict[String([currentSelection.x/SPRITE_WIDTH, currentSelection.y/SPRITE_WIDTH])];
+        locationDict[String([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
         //connection.send(locationDict[String([currentSelection.x, currentSelection.y])]); 
       }
       

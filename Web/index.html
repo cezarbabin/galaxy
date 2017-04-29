@@ -198,7 +198,7 @@
               var realToRelativeX = x - (window.innerWidth/2)/SPRITE_WIDTH;
               var realToRelativeY = y + (window.innerHeight/2)/SPRITE_WIDTH;
 
-              delete locationDict[Stringify([realToRelativeX, realToRelativeY])];
+              //delete locationDict[Stringify([realToRelativeX, realToRelativeY])];
 
               x = parseFloat(json[index]["x"]);
               y = parseFloat(json[index]["y"]);
@@ -239,7 +239,7 @@
             var realToRelativeX = x - (window.innerWidth/2)/SPRITE_WIDTH;
             var realToRelativeY = y + (window.innerHeight/2)/SPRITE_WIDTH;
 
-            delete locationDict[Stringify([realToRelativeX, realToRelativeY])];
+            //delete locationDict[Stringify([realToRelativeX, realToRelativeY])];
 
             x = parseFloat(json[index]["x"]);
             y = parseFloat(json[index]["y"]);
@@ -258,7 +258,7 @@
             if (DESKTOP_BROWSER)
               x += (window.innerWidth - 3 * MAX_WIDTH)/(2*SPRITE_WIDTH);
 
-            locationDict[key] = index;
+            locationDict[index] = key;
           } else {
             //y -= (window.innerHeight/2)/SPRITE_WIDTH;
           }
@@ -304,8 +304,8 @@
       bunny
         .on('pointerdown', onDragStart)
         .on('pointerup', onDragEnd)
-        .on('pointerupoutside', onDragEnd)
-        .on('pointermove', onDragMove);
+        .on('pointermove', onDragMove)
+        .on('pointerupoutside', onDragEnd);
 
         // For mouse-only events
         // .on('mousedown', onDragStart)
@@ -347,23 +347,23 @@
       var position = [xRelativeToCenter/SPRITE_WIDTH, 
         (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH];
       
-      currentIndex = locationDict[Stringify(position)];
+      //currentIndex = locationDict[Stringify(position)];
 
       if (editMode == true){
         //var obj = this;
         console.log("PING" + "#" + 
-          currentIndex + "#" + 
+          this.id + "#" + 
           parseInt(position[0] * 100000)/100000 + "#" + 
           parseInt(position[1] * 100000)/100000
           );
       
         connection.send("PING" + "#" + 
-          currentIndex + "#" + 
+          this.id + "#" + 
           parseInt(position[0] * 100000)/100000 + "#" + 
           parseInt(position[1] * 100000)/100000
         );
         
-        delete locationDict[position];
+        //delete locationDict[position];
 
         this.data = event.data;
         //this.alpha = 0.5;
@@ -371,7 +371,8 @@
 
         timer = setTimeout(function(obj){
           this.alpha = 1;
-          connection.send(currentIndex);
+          connection.send(currentSelection.id);
+          currentSelection.dragging = false;
           currentSelection.alpha = 1;
           //currentSelection = null;
           //executed = true;
@@ -446,22 +447,22 @@
     }
 
     function onDragEnd() {
-      var xRelativeToCenter = currentSelection.x - window.innerWidth/2;
+      var xRelativeToCenter = this.x - window.innerWidth/2;
 
-      var position =[xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH]
-      locationDict[Stringify(position)] = currentIndex;
+      var position =[xRelativeToCenter/SPRITE_WIDTH, (this.y - window.innerHeight/2)/SPRITE_WIDTH]
+      locationDict[this.id] = Stringify(position);
 
       if (timer)
         clearTimeout(timer);
 
       console.log("COORD" + "#" + 
-          currentIndex + "#" + 
+          this.id + "#" + 
           xRelativeToCenter/SPRITE_WIDTH + "#" + 
-          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
+          (this.y - window.innerHeight/2)/SPRITE_WIDTH);
 
       if (!executed && editMode == true) {
         connection.send("COORD" + "#" + 
-          currentIndex + "#" + 
+          this.id + "#" + 
           parseInt(position[0] * 100000)/100000 + "#" + 
           parseInt(position[1] * 100000)/100000);
       }
@@ -512,7 +513,7 @@
 
         startSizeX = currentSelection.width;
         startSizeY = currentSelection.height;
-        sizesDict[currentIndex] = (startSizeX/SPRITE_WIDTH, startSizeY/SPRITE_WIDTH);
+        sizesDict[currentSelection.id] = (startSizeX/SPRITE_WIDTH, startSizeY/SPRITE_WIDTH);
       }
     });
 

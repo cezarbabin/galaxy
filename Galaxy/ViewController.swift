@@ -121,17 +121,18 @@ class ViewController: UIViewController {
                 */
                 
             } else if text != "Ping" {
+                self.element = text
                 DispatchQueue.main.async {
                     if self.blockSelector != nil {
                         if self.session != nil {
                             self.blockSelector?.session = self.session
-                            self.blockSelector?.element = self.element
+                            self.blockSelector?.element = text
                         }
                         self.present(self.blockSelector!, animated: true, completion: nil)
                     }
                 }
                 
-                self.element = text
+                
             }
             
         }, { (session, binary) in

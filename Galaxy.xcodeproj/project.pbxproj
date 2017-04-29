@@ -25,6 +25,8 @@
 		545F36EA1EABE1C5000811E3 /* GalaxyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36E91EABE1C5000811E3 /* GalaxyTests.swift */; };
 		545F36F51EABE1C5000811E3 /* GalaxyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F36F41EABE1C5000811E3 /* GalaxyUITests.swift */; };
 		54F2B8611EB1C25200E4A6D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54F2B8601EB1C25200E4A6D1 /* Assets.xcassets */; };
+		54F2B8631EB3E66B00E4A6D1 /* JSONUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F2B8621EB3E66B00E4A6D1 /* JSONUtil.swift */; };
+		54F2B8651EB3ECAA00E4A6D1 /* PublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F2B8641EB3ECAA00E4A6D1 /* PublishViewController.swift */; };
 		A541D2CA373DFFFC5E51BA44 /* Pods_Galaxy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BA88A2F87DDE2EABF7A86D /* Pods_Galaxy.framework */; };
 		E9EC66C666ABA9B408F5C87E /* Pods_GalaxyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F589318746243D61E108968 /* Pods_GalaxyTests.framework */; };
 /* End PBXBuildFile section */
@@ -75,6 +77,8 @@
 		545F36F41EABE1C5000811E3 /* GalaxyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyUITests.swift; sourceTree = "<group>"; };
 		545F36F61EABE1C5000811E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54F2B8601EB1C25200E4A6D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		54F2B8621EB3E66B00E4A6D1 /* JSONUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONUtil.swift; sourceTree = "<group>"; };
+		54F2B8641EB3ECAA00E4A6D1 /* PublishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishViewController.swift; sourceTree = "<group>"; };
 		65B54E5784D2904E84D8EBD9 /* Pods_GalaxyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GalaxyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F589318746243D61E108968 /* Pods_GalaxyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GalaxyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A62EF89F7C8896ECE748989A /* Pods-GalaxyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GalaxyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GalaxyTests/Pods-GalaxyTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 				54098E301EB06263000D611A /* FileUploader.swift */,
 				5453D34F1EB10F0B00CCAAB6 /* PassThroughView.swift */,
 				5453DA481EB15DAC00CCAAB6 /* BlockSelectorViewController.swift */,
+				54F2B8621EB3E66B00E4A6D1 /* JSONUtil.swift */,
+				54F2B8641EB3ECAA00E4A6D1 /* PublishViewController.swift */,
 			);
 			path = Galaxy;
 			sourceTree = "<group>";
@@ -511,8 +517,10 @@
 				5453DA4E1EB18C3600CCAAB6 /* CurvedView.swift in Sources */,
 				545F36D71EABE1C4000811E3 /* ViewController.swift in Sources */,
 				545F36D51EABE1C4000811E3 /* AppDelegate.swift in Sources */,
+				54F2B8651EB3ECAA00E4A6D1 /* PublishViewController.swift in Sources */,
 				54098E311EB06263000D611A /* FileUploader.swift in Sources */,
 				5453D3501EB10F0B00CCAAB6 /* PassThroughView.swift in Sources */,
+				54F2B8631EB3E66B00E4A6D1 /* JSONUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

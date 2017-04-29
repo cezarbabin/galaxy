@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     var socket = WebSocket(url: URL(string: "ws://127.0.0.1:8080/websocket-echo")!, protocols: ["chat", "superchat"])
     
-    var imagePicker = UIImagePickerController()
+    
     
     var blockSelector : BlockSelectorViewController?
     
@@ -53,40 +53,13 @@ class ViewController: UIViewController {
         self.alternateView(toMain:true)
     }
     
-    @IBAction func imagePickerPressed(sender: UIButton) {
-        self.present(self.imagePicker, animated: true, completion: nil)
-    }
-    
     @IBAction func publishPage(_ sender: Any) {
         //open the json file
-        let path = NSSearchPathForDirectoriesInDomains(
-            .documentDirectory,
-            .userDomainMask,
-            true)[0]
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "PublishViewController")
+        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        self.present(controller, animated: true, completion: nil)
         
-        let json : [String : Any]? = retrieveJsonData()
-        
-        print (json)
-        
-        if json != nil {
-            for (element, properties) in json! {
-                if element != "config" {
-                let properties = properties as! [String : Any]
-                   if properties != nil {
-                        let name = properties["name"] as! String?
-                        let fileName = name!.replacingOccurrences(of: ".png", with: "")
-                        FileUploader.uploadAndUpdateFileWith(filePath: (path + "/" + name!), fileName: fileName, fileExt: ".png"){ (url, error) in
-                            print(url)
-                        }
-
-                    }
-                }
-            }
-        }
-        
-        FileUploader.uploadAndUpdateFileWith(filePath: path + "/data.json", fileName: "data", fileExt: ".json"){ (url, error) in
-            print(url)
-        }
     }
     
     var session : WebSocketSession?
@@ -101,6 +74,11 @@ class ViewController: UIViewController {
                                width: self.view.frame.size.width,
                                height: self.view.frame.size.height)
 
+        self.btn.layer.cornerRadius = 22
+        self.btn.layer.borderWidth = 1
+        self.btn.layer.borderColor = UIColor.clear.cgColor
+
+        
         view.addSubview(webView)
         view.bringSubview(toFront: webView)
         view.addSubview(topView)
@@ -109,9 +87,7 @@ class ViewController: UIViewController {
         view.bringSubview(toFront: editorView)
         editorView.isHidden = true
         
-        self.imagePicker.delegate = self
-        self.imagePicker.sourceType = .savedPhotosAlbum;
-        self.imagePicker.allowsEditing = false
+        
         
         setupBlockSelector()
         moveFilesToDocs()
@@ -127,7 +103,7 @@ class ViewController: UIViewController {
                
                
                 
-                self.saveJsonDataPosition(index: message[1], x: message[2], y: message[3])
+                JSONUtil.saveJsonDataPosition(index: message[1], x: message[2], y: message[3])
                
                 
             // HANDLE ALL EVENTS
@@ -147,6 +123,10 @@ class ViewController: UIViewController {
             } else if text != "Ping" {
                 DispatchQueue.main.async {
                     if self.blockSelector != nil {
+                        if self.session != nil {
+                            self.blockSelector?.session = self.session
+                            self.blockSelector?.element = self.element
+                        }
                         self.present(self.blockSelector!, animated: true, completion: nil)
                     }
                 }
@@ -247,171 +227,6 @@ extension ViewController : WebSocketDelegate {
     
 }
 
-extension ViewController : UIImagePickerControllerDelegate {
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.dismiss(animated: true, completion: { () -> Void in
-        })
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let currentDirectoryURL = URL(fileURLWithPath: Bundle.main.resourcePath!)
-        let currentUrl = info["UIImagePickerControllerReferenceURL"] as! URL
-        let imageName = (currentUrl.absoluteString as NSString)
-            .replacingOccurrences(of: "assets-library://asset/asset.PNG?id=", with: "")
-            .replacingOccurrences(of:"&ext=PNG", with:"")
-            .replacingOccurrences(of: "assets-library://asset/asset.JPG?id=", with: "")
-            .replacingOccurrences(of:"&ext=JPG", with:"")
-        
-        var item: PHAsset = PHAsset.fetchAssets(withALAssetURLs: [currentUrl], options: nil)[0]
-        let phManager = PHImageManager.default
-        let options = PHImageRequestOptions()
-        options.isSynchronous = true; // do it if you want things running in background thread
-        phManager().requestImageData(for: item, options: options) { imageData,dataUTI,orientation,info in
-            if let newData:NSData = imageData! as NSData
-            {
-                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-                newData.write(toFile: documentsPath + "/\(imageName).png", atomically: true)
-                if self.session != nil {
-                    self.session?.writeText("/\(imageName).png")
-                    self.saveJsonData(type:"image", name:"\(imageName).png", element:self.element!)
-                }
-                
-                /* PRINT DIRECTORY
-                do {
-                    let directoryContents = try FileManager.default.contentsOfDirectory(at: currentDirectoryURL, includingPropertiesForKeys: nil, options: [])
-                    //print(directoryContents)
-                } catch let error as NSError {
-                    //print(error.localizedDescription)
-                }
-                */
-            }
-        }
-
-        self.dismiss(animated: true, completion: { () -> Void in })
-    }
-    
-    func saveJsonData(type:String, name:String, element:String){
-        let path = NSSearchPathForDirectoriesInDomains(
-            .documentDirectory,
-            .userDomainMask,
-            true)[0] + "/data.json"
-        
-        var validDictionary : [String : Any]
-        var jsonData = NSData(contentsOfFile: path)
-        do{
-            validDictionary = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers) as! [String : Any]
-            validDictionary[element] = ["type" : type, "name" : name]
-            let rawData: NSData!
-            
-            if JSONSerialization.isValidJSONObject(validDictionary) { // True
-                do {
-                    rawData = try JSONSerialization.data(withJSONObject: validDictionary, options: .prettyPrinted) as NSData
-                    let success = try rawData.write(toFile: path , options: .atomic)
-                    print ("JSON WRITE SUCCEEDDE \(success)")
-                    
-                    
-                    //var jsonData = NSData(contentsOfFile: "newdata.json")
-                    //var jsonDict = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers)
-                    // -> ["stringValue": "JSON", "arrayValue": [0, 1, 2, 3, 4, 5], "numericalValue": 1]
-                    
-                } catch {
-                    print(error)
-                }
-            }
-        } catch {
-            print("Didnt open")
-            print(error)
-        }
-    }
-    
-    func saveJsonDataPosition(index:String, x:String, y:String){
-        let path = NSSearchPathForDirectoriesInDomains(
-            .documentDirectory,
-            .userDomainMask,
-            true)[0] + "/data.json"
-        
-        var validDictionary : [String : Any]
-        var jsonData = NSData(contentsOfFile: path)
-        do{
-            validDictionary = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers) as! [String : Any]
-            
-            let name = (validDictionary[index] as! [String : Any])["name"]!
-            let type = (validDictionary[index] as! [String : Any])["type"]!
-            validDictionary[index] = ["name":name , "type":type, "x" : x, "y" : y]
-            let rawData: NSData!
-            
-            if JSONSerialization.isValidJSONObject(validDictionary) { // True
-                do {
-                    rawData = try JSONSerialization.data(withJSONObject: validDictionary, options: .prettyPrinted) as NSData
-                    let success = try rawData.write(toFile: path , options: .atomic)
-                    print ("JSON WRITE SUCCEEDDE \(success)")
-                    
-                    
-                    //var jsonData = NSData(contentsOfFile: "newdata.json")
-                    //var jsonDict = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers)
-                    // -> ["stringValue": "JSON", "arrayValue": [0, 1, 2, 3, 4, 5], "numericalValue": 1]
-                    
-                } catch {
-                    print(error)
-                }
-            }
-        } catch {
-            print("Didnt open")
-            print(error)
-        }
-    }
-    
-    func retrieveJsonData() -> [String : Any]? {
-        let path = NSSearchPathForDirectoriesInDomains(
-            .documentDirectory,
-            .userDomainMask,
-            true)[0] + "/data.json"
-        
-        var validDictionary : [String : Any]
-        var jsonData = NSData(contentsOfFile: path)
-        do{
-            validDictionary = try JSONSerialization.jsonObject(with: jsonData! as Data, options: .mutableContainers) as! [String : Any]
-            
-            return validDictionary
-        } catch {
-            print("There was an error opening the file")
-            print(error)
-        }
-        return nil
-    }
-    
-    func copyBundleToDocs(name:String, ext:String) {
-        let bundlePath = Bundle.main.path(forResource: name, ofType: ext)
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        let fileManager = FileManager.default
-        let fullDestPath = NSURL(fileURLWithPath: documentsPath).appendingPathComponent(name + ext)
-        let fullDestPathString = fullDestPath?.path
-        
-        do{
-            if ext == ".json" {
-                print ("YES JSON")
-                let fileExists = FileManager().fileExists(atPath: fullDestPathString!)
-                if !fileExists {
-                    try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
-                }
-            } else if ext == ".html" {
-                try fileManager.removeItem(atPath: fullDestPathString!)
-                try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
-            } else {
-                try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
-            }
-        }catch{
-            print("\n ////?ERRROR")
-            print(error)
-        }
-    }
-}
-
-extension ViewController : UINavigationControllerDelegate {
-    
-}
-
 extension ViewController : WKUIDelegate {
    
 }
@@ -433,5 +248,34 @@ extension ViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
+    
+    
+    func copyBundleToDocs(name:String, ext:String) {
+        let bundlePath = Bundle.main.path(forResource: name, ofType: ext)
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        let fileManager = FileManager.default
+        let fullDestPath = NSURL(fileURLWithPath: documentsPath).appendingPathComponent(name + ext)
+        let fullDestPathString = fullDestPath?.path
+        
+        do{
+            if ext == ".jso" {
+                print ("YES JSON")
+                let fileExists = FileManager().fileExists(atPath: fullDestPathString!)
+                if !fileExists {
+                    try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
+                }
+            } else if ext == ".html" || ext == ".json" {
+                try fileManager.removeItem(atPath: fullDestPathString!)
+                try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
+            } else {
+                try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
+            }
+        }catch{
+            print("\n ////?ERRROR")
+            print(error)
+        }
+    }
+
 }
 

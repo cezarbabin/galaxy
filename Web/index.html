@@ -10,8 +10,8 @@
 <body>
   <script>
     // Setup all of the class vars 
-    var PRODUCTION = true;
-    var editMode = false;
+    var PRODUCTION = false;
+    var editMode = true;
     var SPRITE_WIDTH = window.innerWidth/3;
     var SPRITE_HEIGHT = SPRITE_WIDTH;
     var MAX_WIDTH = 180;
@@ -173,9 +173,12 @@
         var fromRelativeToRealX = x + window.innerWidth/2;
         var fromRelativeToRealY = y - window.innerHeight/2;
 
-        var key = Stringify([x/SPRITE_WIDTH , y/SPRITE_WIDTH])
-        
-        locationDict[key] = i;
+        //var position = [x/SPRITE_WIDTH, y/SPRITE_WIDTH];
+
+        //var key = Stringify(parseInt(position[0] * 100000)/100000 + "#" + 
+        //  parseInt(position[1] * 100000)/100000)
+
+        //locationDict[key] = i;
 
         checkData(i,fromRelativeToRealX/SPRITE_WIDTH,fromRelativeToRealY/SPRITE_WIDTH);
         
@@ -214,7 +217,7 @@
               if (DESKTOP_BROWSER)
                 x += (window.innerWidth - 3 * MAX_WIDTH)/(2*SPRITE_WIDTH);
 
-              locationDict[key] = index;
+              locationDict[index] = key;
             } else {
               //y -= (window.innerHeight/2)/SPRITE_WIDTH;
             }
@@ -278,9 +281,9 @@
 
     function createBunny(x, y, t, index) {
       if (t != null)
-        var bunny = new PIXI.Sprite(t)
+        var bunny = new Card(t, index);
       else 
-        var bunny = new PIXI.Sprite(texture);
+        var bunny = new Card(texture, index);
       //console.log ("here");
 
 
@@ -333,6 +336,7 @@
 
     var currentIndex;
     function onDragStart(event) {
+      this.alpha = 0.5;
       // store a reference to the data
       // the reason for this is because of multitouch
       // we want to track the movement of this particular touch
@@ -340,36 +344,47 @@
 
       var xRelativeToCenter = currentSelection.x - window.innerWidth/2;
 
-      currentIndex = locationDict[Stringify([xRelativeToCenter/SPRITE_WIDTH, 
-        (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
+      var position = [xRelativeToCenter/SPRITE_WIDTH, 
+        (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH];
+      
+      currentIndex = locationDict[Stringify(position)];
 
       if (editMode == true){
         //var obj = this;
         console.log("PING" + "#" + 
           currentIndex + "#" + 
-          xRelativeToCenter/SPRITE_WIDTH + "#" + 
-          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
+          parseInt(position[0] * 100000)/100000 + "#" + 
+          parseInt(position[1] * 100000)/100000
+          );
       
         connection.send("PING" + "#" + 
           currentIndex + "#" + 
-          xRelativeToCenter/SPRITE_WIDTH + "#" + 
-          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
+          parseInt(position[0] * 100000)/100000 + "#" + 
+          parseInt(position[1] * 100000)/100000
+        );
         
-        delete locationDict[Stringify([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])];
+        delete locationDict[position];
 
         this.data = event.data;
         //this.alpha = 0.5;
         this.dragging = true;
-        
+
         timer = setTimeout(function(obj){
+          this.alpha = 1;
+          connection.send(currentIndex);
+          currentSelection.alpha = 1;
+          //currentSelection = null;
           //executed = true;
           //this.alpha = 0.5;
           //editMode = true
           //app.renderer.backgroundColor = 0x109999; 
           //makeCircleMask(currentSelection);
         }, touchduration); 
+        
+
         //editMode = true
       } else {
+        
         
       }
     }
@@ -433,7 +448,8 @@
     function onDragEnd() {
       var xRelativeToCenter = currentSelection.x - window.innerWidth/2;
 
-      locationDict[Stringify([xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH])] = currentIndex;
+      var position =[xRelativeToCenter/SPRITE_WIDTH, (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH]
+      locationDict[Stringify(position)] = currentIndex;
 
       if (timer)
         clearTimeout(timer);
@@ -446,11 +462,13 @@
       if (!executed && editMode == true) {
         connection.send("COORD" + "#" + 
           currentIndex + "#" + 
-          xRelativeToCenter/SPRITE_WIDTH + "#" + 
-          (currentSelection.y - window.innerHeight/2)/SPRITE_WIDTH);
+          parseInt(position[0] * 100000)/100000 + "#" + 
+          parseInt(position[1] * 100000)/100000);
       }
       
       executed = false;
+
+      //currentSelection = null;
 
       this.alpha = 1;
       this.dragging = false;
@@ -481,6 +499,7 @@
 
     mc.on("pinch", function(ev) {
       if (!editMode){
+
         currentSelection.width = startSizeX * ev.scale;
         currentSelection.height = startSizeY * ev.scale;
       }
@@ -488,6 +507,9 @@
 
     mc.on("pinchend", function(ev) {
       if (!editMode){
+        // DONT BRING UP MENU IF PINCHING
+        
+
         startSizeX = currentSelection.width;
         startSizeY = currentSelection.height;
         sizesDict[currentIndex] = (startSizeX/SPRITE_WIDTH, startSizeY/SPRITE_WIDTH);
@@ -505,6 +527,37 @@
       var y = parseInt(arr[1] * 100000)/100000;
       return String([x, y]);
     }
+
+    function Card(texture, id) {    
+      PIXI.Sprite.call(this, texture);    
+      //this.suit = "diamonds";    
+      //this.value = 9;
+      this.id = id;
+      uuid_list.push(id);
+    }
+
+    Card.prototype = Object.create(PIXI.Sprite.prototype);
+    Card.prototype.constructor = Card;
+    Card.prototype.playCard = function () { /* ... */ };
+
+    function guidGenerator() {
+      var S4 = function() {
+         return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+      };
+      return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+    }
+
+    function generateId(){
+      while(true){
+        var newId = guidGenerator();
+        if (!uuid_list.includes(newId)){
+          uuid_list.push(newId);
+          return newId;
+        }
+      }
+    }
+
+    var uuid_list = [];
 
     /// OLLLLLLE
     ///

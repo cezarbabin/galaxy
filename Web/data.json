@@ -1,38 +1,44 @@
 {
   "2" : {
+  	"y" : 0,
+  	"x" : 1,
     "type" : "image",
     "name" : "mini.jpg"
   },
   "1" : {
+  	"y" : 0,
+  	"x" : -1,
     "type" : "image",
     "name" : "mini.jpg"
   },
   "8" : {
+  	"y" : 1,
+  	"x" : 0,
     "type" : "image",
     "name" : "mini.jpg"
   },
   "6" : {
-    "y" : "-1.9040816326530612",
+  	"y" : -1,
+  	"x" : 0,
     "name" : "mini.jpg",
-    "x" : "0.0673469387755102",
     "type" : "image"
   },
   "3" : {
+  	"y" : 1,
+  	"x" : 1,
     "name" : "mini.jpg",
-    "x" : "-0.0673469387755102",
-    "type" : "image",
-    "y" : "2.093877551020408"
+    "type" : "image"
   },
   "4" : {
+  	"y" : 1,
+  	"x" : -1,
     "type" : "image",
     "name" : "mini.jpg"
   },
   "config" : "square",
   "7" : {
-    "type" : "image",
-    "name" : "mini.jpg"
-  },
-  "9" : {
+  	"y" : -1,
+  	"x" : 1,
     "type" : "image",
     "name" : "mini.jpg"
   },
@@ -43,6 +49,8 @@
     "x" : 0
   },
   "5" : {
+  	"y" : -1,
+  	"x" : -1,
     "type" : "image",
     "name" : "mini.jpg"
   }

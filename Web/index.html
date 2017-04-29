@@ -11,7 +11,7 @@
   <script>
     // Setup all of the class vars 
     var PRODUCTION = false;
-    var editMode = true;
+    var editMode = false;
     var SPRITE_WIDTH = window.innerWidth/3;
     var SPRITE_HEIGHT = SPRITE_WIDTH;
     var MAX_WIDTH = 180;
@@ -479,6 +479,10 @@
 
     function onDragMove() {
       if (this.dragging) {
+        // DONT DRAG AND OPEN BLOCK EDITOR
+        if (timer)
+          clearTimeout(timer);
+       
         var newPosition = this.data.getLocalPosition(this.parent);
         this.x = newPosition.x;
         this.y = newPosition.y;

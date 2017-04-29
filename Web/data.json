@@ -1,35 +1,41 @@
 {
   "2" : {
+  	"scale":1,
   	"y" : 0,
   	"x" : 1,
     "type" : "image",
     "name" : "mini.jpg"
   },
   "1" : {
+  	"scale":1,
   	"y" : 0,
   	"x" : -1,
     "type" : "image",
     "name" : "mini.jpg"
   },
   "8" : {
+  	"scale":1,
   	"y" : 1,
   	"x" : 0,
     "type" : "image",
     "name" : "mini.jpg"
   },
   "6" : {
+  	"scale":1,
   	"y" : -1,
   	"x" : 0,
     "name" : "mini.jpg",
     "type" : "image"
   },
   "3" : {
+  	"scale":1,
   	"y" : 1,
   	"x" : 1,
     "name" : "mini.jpg",
     "type" : "image"
   },
   "4" : {
+  	"scale":1,
   	"y" : 1,
   	"x" : -1,
     "type" : "image",
@@ -37,18 +43,21 @@
   },
   "config" : "square",
   "7" : {
+  	"scale":1,
   	"y" : -1,
   	"x" : 1,
     "type" : "image",
     "name" : "mini.jpg"
   },
   "0" : {
+  	"scale":1,
     "y" : 0,
     "type" : "image",
     "name" : "mini.jpg",
     "x" : 0
   },
   "5" : {
+  	"scale":1,
   	"y" : -1,
   	"x" : -1,
     "type" : "image",

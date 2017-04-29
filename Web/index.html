@@ -10,7 +10,7 @@
 <body>
   <script>
     // Setup all of the class vars 
-    var PRODUCTION = false;
+    var PRODUCTION = true;
     var editMode = false;
     var SPRITE_WIDTH = window.innerWidth/3;
     var SPRITE_HEIGHT = SPRITE_WIDTH;
@@ -189,6 +189,7 @@
 
     function checkData(index, x, y){
       //console.log(json);
+      var scale = 1;
 
       if (PRODUCTION){
         if (json[index] != null){
@@ -221,8 +222,12 @@
             } else {
               //y -= (window.innerHeight/2)/SPRITE_WIDTH;
             }
+            
+            if (json[index]["scale"] != null){
+              scale = json[index]["scale"];
+            }
 
-            getImageUrl(json[index]["name"], x, y)
+            getImageUrl(json[index]["name"], x, y, index, scale);
             //texture = PIXI.Texture.fromImage(json[index]["name"])
           } else if (json[index]["type"] == "video"){
             //texture = PIXI.Texture.fromVideoUrl(json[index]["name"])
@@ -262,24 +267,27 @@
           } else {
             //y -= (window.innerHeight/2)/SPRITE_WIDTH;
           }
+          if (json[index]["scale"] != null){
+            scale = json[index]["scale"];
+          }
         } else {
           texture = PIXI.Texture.fromImage('square_green.png');
         }
-        createBunny(x, y, texture, index)
+        createBunny(x, y, texture, index, scale)
       }
     }
 
-    function getImageUrl(name, x, y) {
+    function getImageUrl(name, x, y, index, scale) {
       storage.ref().child('images/' + name).getDownloadURL().then(function(url) {
         texture = PIXI.Texture.fromImage(url)
-        createBunny(x, y, texture)
+        createBunny(x, y, texture, index, scale)
       }).catch(function(error) {
         // Handle any errors
         console.log("There was an error" + error);
       });
     }
 
-    function createBunny(x, y, t, index) {
+    function createBunny(x, y, t, index, scale) {
       if (t != null)
         var bunny = new Card(t, index);
       else 
@@ -297,8 +305,8 @@
       // center the bunny's anchor point
       bunny.anchor.set(0.5);
 
-      bunny.height = SPRITE_HEIGHT;
-      bunny.width = SPRITE_WIDTH;
+      bunny.height = SPRITE_HEIGHT*scale;
+      bunny.width = SPRITE_WIDTH*scale;
 
       //// BUTTTTON
       bunny
@@ -517,6 +525,10 @@
 
         startSizeX = currentSelection.width;
         startSizeY = currentSelection.height;
+        connection.send("SCALE" + "#" + 
+          currentSelection.id + "#" + 
+          currentSelection.width/SPRITE_WIDTH
+        );
         sizesDict[currentSelection.id] = (startSizeX/SPRITE_WIDTH, startSizeY/SPRITE_WIDTH);
       }
     });

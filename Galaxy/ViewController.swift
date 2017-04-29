@@ -100,26 +100,12 @@ class ViewController: UIViewController {
             var message = text.characters.split{$0 == "#"}.map(String.init)
             if message[0] == "COORD" {
                 print ("we got coordinates")
-               
-               
-                
                 JSONUtil.saveJsonDataPosition(index: message[1], x: message[2], y: message[3])
-               
-                
             // HANDLE ALL EVENTS
             } else if message[0] == "PING" {
-                //print ("we got preliminary coordinates")
-                /*
-                let path = NSSearchPathForDirectoriesInDomains(
-                    .documentDirectory,
-                    .userDomainMask,
-                    true)[0]
-                
-                let json : [String : Any]? = self.retrieveJsonData()
-                
-                print (json)
-                */
-                
+
+            } else if message[0] == "SCALE" {
+                JSONUtil.saveJsonDataScale(index: message[1], scale: message[2])
             } else if text != "Ping" {
                 self.element = text
                 DispatchQueue.main.async {

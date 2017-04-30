@@ -57,22 +57,6 @@ class BlockSelectorViewController: UIViewController {
         self.present(self.imagePicker, animated: true, completion: nil)
     }
     
-    /*
-    override func viewDidLoad() {
-
-        super.awakeFromNib()
-        self.view.frame = CGRect(x: 0, y: UIScreen.main.bounds.height + 120,
-                            width: UIScreen.main.bounds.width, height: 140)
-        
-        // Call updateConstraints so self.bounds is the correct size
-        self.view.updateConstraints()
-        
-        let curvedView = CurvedView(frame: self.view.bounds,
-                                    curveHeight: 10)
-        //self.view.visualEffectView.mask = curvedView
-    }
-    */
-    
 }
 
 extension BlockSelectorViewController : UIImagePickerControllerDelegate {
@@ -104,18 +88,8 @@ extension BlockSelectorViewController : UIImagePickerControllerDelegate {
                     self.session?.writeText("/\(imageName).png")
                     JSONUtil.saveJsonData(type:"image", name:"\(imageName).png", element:self.element!)
                 }
-                
-                /* PRINT DIRECTORY
-                 do {
-                 let directoryContents = try FileManager.default.contentsOfDirectory(at: currentDirectoryURL, includingPropertiesForKeys: nil, options: [])
-                 //print(directoryContents)
-                 } catch let error as NSError {
-                 //print(error.localizedDescription)
-                 }
-                 */
             }
         }
-        
         self.dismiss(animated: true, completion: { () -> Void in })
     }
 }

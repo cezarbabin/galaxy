@@ -10,7 +10,6 @@ import UIKit
 
 class PublishViewController: UIViewController {
     
-    
     @IBOutlet weak var publishButton: UIButton!
     @IBAction func publishButtonPressed(_ sender: Any) {
         //open the json file
@@ -20,8 +19,6 @@ class PublishViewController: UIViewController {
             true)[0]
         
         let json : [String : Any]? = JSONUtil.retrieveJsonData()
-        
-        print (json)
         
         if json != nil {
             for (element, properties) in json! {

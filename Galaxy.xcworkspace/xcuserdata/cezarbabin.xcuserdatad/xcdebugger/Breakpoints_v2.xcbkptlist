@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Galaxy/PublishViewController.swift"
-            timestampString = "515108701.188214"
+            timestampString = "515266990.988265"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "visitWebsite(_:)"
             landmarkType = "7">
          </BreakpointContent>

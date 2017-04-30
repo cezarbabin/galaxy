@@ -17,13 +17,6 @@ class FileUploader: NSObject {
         }
     }
     
-    /*
-    private override init() {
-        self.storage = FIRStorage.storage()
-        self.storageRef  = self.storage.reference()
-    }
-     */
-    
     public static func uploadAndUpdateFileWith(filePath:String, fileName:String, fileExt:String, completion: @escaping (_ fileUrl: URL?, _ error: Error?) -> Void) {
         if fileExt == ".json" {
             ifFileExists(fileName: fileName, fileExt: fileExt, then: {
@@ -49,31 +42,24 @@ class FileUploader: NSObject {
                                fileExt: fileExt,
                                completion: completion)
             })
-
         }
-
     }
     
     public static func uploadFileWith(filePath:String, fileName:String, fileExt:String, completion: @escaping (_ fileUrl: URL?, _ error: Error?) -> Void) {
 
         // Get a pointer to the local file
         let localFile = URL(string: "file://" + filePath)!
-        
-        print (localFile)
-        
+
         // Create a reference to the file you want to upload
-        let riversRef : FIRStorageReference
+        let storageRef : FIRStorageReference
         if fileExt == ".json" {
-            riversRef = self.storageRef.child("configs/" + fileName + fileExt)
+            storageRef = self.storageRef.child("configs/" + fileName + fileExt)
         } else {
-            riversRef = self.storageRef.child("images/" + fileName + fileExt)
+            storageRef = self.storageRef.child("images/" + fileName + fileExt)
         }
         
-        //let metadata = FIRStorageMetadata()
-        //metadata.contentType = "image/png"
-        
         ifFileDoesNotExist(fileName: fileName, fileExt: fileExt) {
-            let _ = riversRef.putFile(localFile, metadata: nil) { metadata, error in
+            let _ = storageRef.putFile(localFile, metadata: nil) { metadata, error in
                 if let error = error {
                     // Uh-oh, an error occurred!
                     print("An error occured in uploading file \(fileName). Error: \(error)")
@@ -84,7 +70,6 @@ class FileUploader: NSObject {
                 }
             }
         }
-        
     }
     
     public static func removeOldConfig(fileName:String, fileExt:String, completion: @escaping() -> Void) {
@@ -100,8 +85,6 @@ class FileUploader: NSObject {
                 completion()
             }
         }
-        
-        
     }
     
     private static func ifFileDoesNotExist(fileName:String, fileExt:String, completion: @escaping () -> Void)  {
@@ -112,11 +95,10 @@ class FileUploader: NSObject {
         // Fetch the download URL
         starsRef.downloadURL { url, error in
             if let error = error {
-                print ("No such file exists")
                 completion()
             } else {
+                print ("Couldn't find the download URL")
                 // Get the download URL for 'images/stars.jpg'
-                //returnValue = false
             }
         }
     }
@@ -133,7 +115,6 @@ class FileUploader: NSObject {
                 otherwise()
             } else {
                 // Get the download URL for 'images/stars.jpg'
-                //returnValue = false
                 print ("File Exists So It Will Be Deleted")
                 then()
             }

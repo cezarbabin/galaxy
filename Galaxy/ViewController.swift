@@ -42,7 +42,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var editModeSwitchView: UISwitch!
     @IBAction func editModeSwitch(_ sender: Any) {
         if self.session != nil {
-            print("YES SWITCH");
             session?.writeText("switch")
         }
     }
@@ -170,7 +169,6 @@ class ViewController: UIViewController {
         let myRequest = NSURLRequest(url: URL(string: "http://127.0.0.1:9080")!)
         self.webView.load(myRequest as URLRequest)
     }
-    
 }
 
 extension ViewController : WebSocketDelegate {

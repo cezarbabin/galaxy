@@ -14,12 +14,10 @@ import WebKit
 import Firebase
 
 class ViewController: UIViewController {
-
+    
     var webView: WKWebView!
     
     var socket = WebSocket(url: URL(string: "ws://127.0.0.1:8080/websocket-echo")!, protocols: ["chat", "superchat"])
-    
-    
     
     var blockSelector : BlockSelectorViewController?
     
@@ -27,14 +25,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var editorView: UIView!
     
-    
     @IBAction func temporary(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "BlockViewController")
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         self.blockSelector = controller as? BlockSelectorViewController
-        
-        //self.present(controller, animated: true, completion: nil)
     }
     
     @IBAction func alternateView(_ sender: Any) {
@@ -73,11 +68,11 @@ class ViewController: UIViewController {
                                y: self.view.frame.origin.y,
                                width: self.view.frame.size.width,
                                height: self.view.frame.size.height)
-
+        
         self.btn.layer.cornerRadius = 22
         self.btn.layer.borderWidth = 1
         self.btn.layer.borderColor = UIColor.clear.cgColor
-
+        
         
         view.addSubview(webView)
         view.bringSubview(toFront: webView)
@@ -101,9 +96,9 @@ class ViewController: UIViewController {
             if message[0] == "COORD" {
                 print ("we got coordinates")
                 JSONUtil.saveJsonDataPosition(index: message[1], x: message[2], y: message[3])
-            // HANDLE ALL EVENTS
+                // HANDLE ALL EVENTS
             } else if message[0] == "PING" {
-
+                
             } else if message[0] == "SCALE" {
                 JSONUtil.saveJsonDataScale(index: message[1], scale: message[2])
             } else if text != "Ping" {
@@ -134,7 +129,7 @@ class ViewController: UIViewController {
         startServer()
         startWebSocket()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         //view.bringSubview(toFront: btn)
     }
@@ -164,7 +159,7 @@ class ViewController: UIViewController {
         self.socket.delegate = self
         self.socket.connect()
     }
-
+    
     func startServer () {
         let server = demoServer(Bundle.main.resourcePath!)
         
@@ -184,13 +179,13 @@ class ViewController: UIViewController {
         } catch {
             print("server could not start")
         }
-
+        
         let myRequest = NSURLRequest(url: URL(string: "http://127.0.0.1:9080")!)
         
         //let myRequest = NSURLRequest(url: URL(string: "http://codepen.io/anon/pen/NjpqER")!)
         self.webView.load(myRequest as URLRequest)
     }
-
+    
 }
 
 extension ViewController : WebSocketDelegate {
@@ -215,7 +210,7 @@ extension ViewController : WebSocketDelegate {
 }
 
 extension ViewController : WKUIDelegate {
-   
+    
 }
 
 extension ViewController {
@@ -246,14 +241,18 @@ extension ViewController {
         let fullDestPathString = fullDestPath?.path
         
         do{
+            let fileExists = FileManager().fileExists(atPath: fullDestPathString!)
             if ext == ".jso" {
                 print ("YES JSON")
-                let fileExists = FileManager().fileExists(atPath: fullDestPathString!)
+                
                 if !fileExists {
                     try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
                 }
             } else if ext == ".html" || ext == ".json" {
-                try fileManager.removeItem(atPath: fullDestPathString!)
+                if fileExists {
+                    try fileManager.removeItem(atPath: fullDestPathString!)
+                }
+                
                 try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             } else {
                 try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
@@ -263,6 +262,5 @@ extension ViewController {
             print(error)
         }
     }
-
+    
 }
-

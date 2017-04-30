@@ -21,6 +21,9 @@ class ViewController: UIViewController {
     
     var blockSelector : BlockSelectorViewController?
     
+    var session : WebSocketSession?
+    var element : String?
+    
     @IBOutlet weak var btn: UIButton!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var editorView: UIView!
@@ -49,16 +52,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func publishPage(_ sender: Any) {
-        //open the json file
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "PublishViewController")
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         self.present(controller, animated: true, completion: nil)
-        
     }
-    
-    var session : WebSocketSession?
-    var element : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +71,6 @@ class ViewController: UIViewController {
         self.btn.layer.borderWidth = 1
         self.btn.layer.borderColor = UIColor.clear.cgColor
         
-        
         view.addSubview(webView)
         view.bringSubview(toFront: webView)
         view.addSubview(topView)
@@ -82,21 +79,15 @@ class ViewController: UIViewController {
         view.bringSubview(toFront: editorView)
         editorView.isHidden = true
         
-        
-        
         setupBlockSelector()
         moveFilesToDocs()
         
         let server = HttpServer()
         server["/websocket-echo"] = websocket({ (session, text) in
-            print (text)
             self.session = session
-            
             var message = text.characters.split{$0 == "#"}.map(String.init)
             if message[0] == "COORD" {
-                print ("we got coordinates")
                 JSONUtil.saveJsonDataPosition(index: message[1], x: message[2], y: message[3])
-                // HANDLE ALL EVENTS
             } else if message[0] == "PING" {
                 
             } else if message[0] == "SCALE" {
@@ -112,10 +103,7 @@ class ViewController: UIViewController {
                         self.present(self.blockSelector!, animated: true, completion: nil)
                     }
                 }
-                
-                
             }
-            
         }, { (session, binary) in
             session.writeBinary(binary)
         })
@@ -168,7 +156,6 @@ class ViewController: UIViewController {
         
         do {
             let directoryContents = try FileManager.default.contentsOfDirectory(at: currentDirectoryURL, includingPropertiesForKeys: nil, options: [])
-            //print(directoryContents)
         } catch let error as NSError {
             print(error.localizedDescription)
         }
@@ -181,8 +168,6 @@ class ViewController: UIViewController {
         }
         
         let myRequest = NSURLRequest(url: URL(string: "http://127.0.0.1:9080")!)
-        
-        //let myRequest = NSURLRequest(url: URL(string: "http://codepen.io/anon/pen/NjpqER")!)
         self.webView.load(myRequest as URLRequest)
     }
     
@@ -216,7 +201,6 @@ extension ViewController : WKUIDelegate {
 extension ViewController {
     
     func alternateView(toMain:Bool) {
-        print ("here")
         if toMain {
             editorView.isHidden = true
             topView.isHidden = false
@@ -224,14 +208,11 @@ extension ViewController {
             editorView.isHidden = false
             topView.isHidden = true
         }
-        
     }
     
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
-    
     
     func copyBundleToDocs(name:String, ext:String) {
         let bundlePath = Bundle.main.path(forResource: name, ofType: ext)
@@ -243,8 +224,6 @@ extension ViewController {
         do{
             let fileExists = FileManager().fileExists(atPath: fullDestPathString!)
             if ext == ".jso" {
-                print ("YES JSON")
-                
                 if !fileExists {
                     try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
                 }
@@ -252,13 +231,11 @@ extension ViewController {
                 if fileExists {
                     try fileManager.removeItem(atPath: fullDestPathString!)
                 }
-                
                 try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             } else {
                 try fileManager.copyItem(atPath: bundlePath!, toPath: fullDestPathString!)
             }
         }catch{
-            print("\n ////?ERRROR")
             print(error)
         }
     }
